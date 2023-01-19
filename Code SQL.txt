@@ -1,0 +1,143 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+CREATE TABLE IF NOT EXISTS `Timbre` (
+  `idTimbre` VARCHAR(14) NOT NULL,
+  `titre` VARCHAR(200) NOT NULL,
+  `dateCreation` DATE NOT NULL,
+  `couleur` VARCHAR(45) NULL DEFAULT NULL,
+  `pays` VARCHAR(45) NOT NULL,
+  `etat` VARCHAR(45) NULL DEFAULT NULL,
+  `tirage` VARCHAR(45) NULL DEFAULT NULL,
+  `dimensions` VARCHAR(50) NULL DEFAULT NULL,
+  `certifier` TINYINT(4) NOT NULL,
+  PRIMARY KEY (`idTimbre`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Membre` (
+  `idMembre` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom` VARCHAR(50) NOT NULL,
+  `Prenom` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `adresse` VARCHAR(200) NOT NULL,
+  `phone` VARCHAR(20) NOT NULL,
+  `zipCode` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`idMembre`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Enchere` (
+  `idEnchere` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateDebut` VARCHAR(45) NOT NULL,
+  `dateFin` VARCHAR(45) NOT NULL,
+  `prixPlancher` VARCHAR(45) NOT NULL,
+  `quantiteMise` DOUBLE NOT NULL,
+  `lordLike` TINYINT(4) NULL DEFAULT NULL,
+  `Timbre_id` VARCHAR(14) NOT NULL,
+  PRIMARY KEY (`idEnchere`),
+  INDEX `fk_Enchere_Timbre1_idx` (`Timbre_id` ASC) ,
+  CONSTRAINT `fk_Enchere_Timbre1`
+    FOREIGN KEY (`Timbre_id`)
+    REFERENCES `Timbre` (`idTimbre`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Image` (
+  `idImage` INT(11) NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(255) NOT NULL,
+  `estPrincip` TINYINT(4) NOT NULL,
+  `Timbre_id` VARCHAR(14) NOT NULL,
+  PRIMARY KEY (`idImage`),
+  INDEX `fk_Images_Timbre_idx` (`Timbre_id` ASC) ,
+  CONSTRAINT `fk_Images_Timbre`
+    FOREIGN KEY (`Timbre_id`)
+    REFERENCES `Timbre` (`idTimbre`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Paiement` (
+  `idPaiement` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPaiement`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Livraison` (
+  `idLivraison` INT(11) NOT NULL AUTO_INCREMENT,
+  `Nom` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idLivraison`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Mise` (
+  `idMise` INT(11) NOT NULL AUTO_INCREMENT,
+  `prixMise` VARCHAR(45) NOT NULL,
+  `dateMise` DATE NOT NULL,
+  `Membre_id` INT(11) NOT NULL,
+  `Enchere_id` INT(11) NOT NULL,
+  PRIMARY KEY (`idMise`, `Membre_id`),
+  INDEX `fk_Mise_Membre1_idx` (`Membre_id` ASC) ,
+  INDEX `fk_Mise_Enchere1_idx` (`Enchere_id` ASC) ,
+  CONSTRAINT `fk_Mise_Membre1`
+    FOREIGN KEY (`Membre_id`)
+    REFERENCES `Membre` (`idMembre`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Mise_Enchere1`
+    FOREIGN KEY (`Enchere_id`)
+    REFERENCES `Enchere` (`idEnchere`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE IF NOT EXISTS `Facture` (
+  `idFacture` INT(11) NOT NULL AUTO_INCREMENT,
+  `dateVente` DATE NOT NULL,
+  `Livraison_id` INT(11) NOT NULL,
+  `Paiement_id` INT(11) NOT NULL,
+  `Mise_id` INT(11) NOT NULL,
+  `Mise_Membre_id` INT(11) NOT NULL,
+  PRIMARY KEY (`idFacture`),
+  INDEX `fk_Facture_Livraison1_idx` (`Livraison_id` ASC) ,
+  INDEX `fk_Facture_Paiement1_idx` (`Paiement_id` ASC) ,
+  INDEX `fk_Facture_Mise1_idx` (`Mise_id` ASC, `Mise_Membre_id` ASC) ,
+  CONSTRAINT `fk_Facture_Livraison1`
+    FOREIGN KEY (`Livraison_id`)
+    REFERENCES `Livraison` (`idLivraison`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Facture_Paiement1`
+    FOREIGN KEY (`Paiement_id`)
+    REFERENCES `Paiement` (`idPaiement`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Facture_Mise1`
+    FOREIGN KEY (`Mise_id` , `Mise_Membre_id`)
+    REFERENCES `Mise` (`idMise` , `Membre_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+SELECT * FROM Enchere 
+INNER JOIN Timbre 
+ON Enchere.Timbre_id = idTimbre
+INNER JOIN images
+ON idTimbre = Images.Timbre_id
+WHERE Images.estPrincip = 1;
