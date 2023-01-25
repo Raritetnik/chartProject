@@ -67,7 +67,7 @@
       {% for timbre in timbres %}
       <div class="carte"> <img src="{{ timbre.url }}" alt="">
           <header>
-              <h4 class="title">{{ timbre.Nom }}</h4>
+              <h4 class="title">{{ timbre.titre }}</h4>
               <small><i>Date limite: {{ timbre.dateFin }}</i></small>
               <div>
                 <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>

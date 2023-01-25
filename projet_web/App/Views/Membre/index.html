@@ -11,12 +11,18 @@
             <div>
                 <h3>Nom utilisateur: {{ membre.Prenom }} {{ membre.Nom }}</h3>
                 <h3>Courriel: {{ membre.username }}</h3>
-                <h3>
-                    <p>Mot de passe:  </p><input type="password">
-                </h3>
-                <h3>
-                    <p>Confirmez mot de passe: </p><input type="password">
-                </h3>
+                <h3>Adresse: {{ membre.adresse }}, {{ membre.zipCode }}</h3>
+                <h3>Téléphone: {{ membre.phone }}</h3>
+                <h3>Courriel: {{ membre.username }}</h3>
+                <form action="membre/changer" method="POST">
+                    <h3>
+                        <p>Mot de passe:  </p><input type="password">
+                    </h3>
+                    <h3>
+                        <p>Confirmez mot de passe: </p><input type="password" name='password'>
+                    </h3>
+                    <p><input type="submit" value="Sauvegarder"></p>
+                </form>
             </div>
         </script>
 
@@ -30,21 +36,37 @@
         <script id="listeMises" type="text/template">
             <div>
                 <h3>Liste des mises</h3>
-
+                <p><a href="enchere/create" class="btn-standart">Afficher une enchère</a></p>
+                <div class='cartes-liste'>
+                    {% for enchere in encheres %}
+                        <header>
+                            <h4 class="title">{{ enchere.titre }}</h4>
+                            <div>
+                            <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                            <a href="timbre/supprimer/{{ timbre.idTimbre }}" class='supprimer'><i class="fa-solid fa-x"></i></a>
+                            <small>{{ enchere.dateCreation }}</small>
+                            </div>
+                        </header>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </script>
 
         <script id="listeTimbres" type="text/template">
-            <h3>Liste des timbres</h3>
+            <h3>Liste des timbres </h3>
+            <p><a href="timbre/create" class="btn-standart">Ajouter une timbre</a></p>
             <div class='cartes-liste'>
                 {% for timbre in timbres %}
                 <div class="carte"> <img src="{{ timbre.url }}" alt="">
                     <header>
-                        <h4 class="title">{{ timbre.Nom }}</h4>
+                        <h4 class="title">{{ timbre.titre }}</h4>
                         <div>
-                          <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
-                          <a href="timbre/supprimer/{{ timbre.idTimbre }}" class='supprimer'><i class="fa-solid fa-x"></i></a>
-                          <small>{{ timbre.dateCreation }}</small>
+                          <p>
+                            <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                            <a href="timbre/supprimer/{{ timbre.idTimbre }}" class='supprimer'><i class="fa-solid fa-x"></i></a>
+                            <a href="timbre/modifier/{{ timbre.idTimbre }}" class='modifier'><i class="fa-solid fa-pen"></i></a>
+                           </p>
                         </div>
                     </header>
                 </div>

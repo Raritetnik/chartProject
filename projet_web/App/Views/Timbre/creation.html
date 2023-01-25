@@ -6,6 +6,7 @@
 {% block body %}
 <main class="contenu-principale">
     <div class="form_boite">
+        <span>{{ error|raw }}</span>
         <form action="store" class="formulaire" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="titre" name="titre">

@@ -6,6 +6,7 @@ namespace App\Controllers;
 use \Core\View;
 use \App\Models\Timbre as model;
 use \App\Models\Image as modelImage;
+use \App\Models\Enchere as modelEnchere;
 
 use \Core\Validation;
 use DateTime;
@@ -38,6 +39,7 @@ class Timbre extends \Core\Controller
         $timbres = model::getTimbre($id);
         setlocale(LC_TIME, 'fr_CA');
         $timbres[0]['dateFin'] = date('d F Y' , strtotime($timbres[0]['dateFin']));
+        $timbres[0]['dateDebut'] = date('d F Y' , strtotime($timbres[0]['dateDebut']));
         View::renderTemplate('Timbre/show.html', ['timbre' => $timbres[0]]);
     }
 
@@ -50,26 +52,57 @@ class Timbre extends \Core\Controller
         $validation = new Validation;
         $timbre = $_POST;
         $timbre['idTimbre'] = uniqid();
+        $timbre['Membre_id'] = $_SESSION['user_id'];
 
         extract($timbre);
-        $validation->name('prixPlancher')->value($prixPlancher)->pattern('float')->required()->max(15);
-        $validation->name('quantiteMise')->value($quantiteMise)->pattern('int')->required()->max(2);
+        $validation->name('tirage')->value($tirage)->pattern('int')->required()->max(3);
+        $validation->name('etat')->value($etat)->pattern('alpha')->required()->max(10);
 
         if($validation->isSuccess()){
-            $url = Timbre::sauvegarderImage($timbre);
+            model::insert($timbre);
 
-            $data['url'] = "http://localhost/projet_web/public/Assets/img_Timbres/".$url;
+
+            $url = Timbre::sauvegarderImage($timbre);
+            $data['url'] = "http://localhost:8080/projet_web/public/Assets/img_Timbres/".$url;
             $data['Timbre_id'] = $idTimbre;
             $data['estPrincip'] = 1;
             modelImage::insert($data);
-            header('Location: http://localhost/projet_web/public/');
+            header('Location: http://localhost:8080/projet_web/public/');
         } else {
+            echo ('FFFFFF');
             $errors = $validation->displayErrors();
+            print_r($errors);
             View::renderTemplate('Timbre/creation.html', ['errors' => $errors]);
         }
     }
 
+    public function modifierAction()
+    {
+        $id = $this->route_params['id'];
+        $timbres = model::getTimbre($id);
+        setlocale(LC_TIME, 'fr_CA');
+        $timbres[0]['dateFin'] = date('d F Y' , strtotime($timbres[0]['dateFin']));
+        $timbres[0]['dateDebut'] = date('d F Y' , strtotime($timbres[0]['dateDebut']));
+        View::renderTemplate('Timbre/edit.html', ['timbre' => $timbres[0]]);
+    }
 
+    public function editAction()
+    {
+        $id = $this->route_params['id'];
+        $_POST['idTimbre'] = $id;
+        print_r($_POST);
+        model::save($_POST);
+        header("Location: http://localhost:8080/projet_web/public/timbre/show/$id");
+    }
+
+    public function supprimerAction() {
+        $id = $this->route_params['id'];
+        modelImage::deleteTimbre($id);
+        if (count(modelEnchere::getEncheres($id)) > 1) {
+            modelEnchere::deleteTimbre($id);
+        }
+        $timbres = model::delete($id);
+    }
 
     public static function sauvegarderImage($data) {
         $info = pathinfo($_FILES['imageFichier']['name']);

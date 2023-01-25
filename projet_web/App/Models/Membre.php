@@ -13,6 +13,7 @@ class Membre extends \Core\Model
 {
 
     protected static $fillable = ['nom', 'prenom', 'phone', 'adresse', 'zipCode', 'username', 'password'];
+    protected static $fillable2 = ['nom', 'prenom', 'phone', 'adresse', 'zipCode', 'username'];
     /**
      * Get all the users as an associative array
      *
@@ -70,6 +71,22 @@ class Membre extends \Core\Model
         foreach($data_map as $key=>$value){
             $stmt->bindValue(":$key", $value);
         }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+    }
+
+    public static function updatePassword($data){
+        $pdo = static::getDB();
+        $options = [
+            'cost' => 10,
+        ];
+        $password = password_hash($data['password'], PASSWORD_BCRYPT, $options);
+        $id = $_SESSION['user_id'];
+
+        $stmt = $pdo->prepare("UPDATE Membre SET Membre.password = '$password' WHERE idMembre = '$id'");
+
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             die();

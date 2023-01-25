@@ -28,8 +28,6 @@ class Image extends \Core\Model
     public static function insert($data){
         $pdo = static::getDB();
 
-        print_r($data);
-
         $data_keys = array_fill_keys(Image::$fillable, '');
         $data_map = array_intersect_key($data, $data_keys);
         $nomChamp = implode(", ",array_keys($data_map));
@@ -39,6 +37,17 @@ class Image extends \Core\Model
         foreach($data_map as $key=>$value){
             $stmt->bindValue(":$key", $value);
         }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+    }
+
+    public static function deleteTimbre($id){
+        $pdo = static::getDB();
+        $stmt = $pdo->prepare("DELETE FROM Image
+        WHERE Image.Timbre_id = '$id'");
+
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             die();

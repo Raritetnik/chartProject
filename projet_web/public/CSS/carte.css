@@ -27,6 +27,12 @@
     padding: 10px;
 }
 
+.contenu-principale #titre {
+    width: 100%;
+    padding: 10px;
+    font-style: 14px;
+}
+
 
 
 /*******************************
@@ -59,6 +65,10 @@
 .affichage-images .fa-solid:hover {
     background-color: white;
     color: #141414;
+}
+
+.affichage-images .image-principale img {
+    max-width: 600px;
 }
 
 .affichage-images .image-carrousel>* {
@@ -102,6 +112,7 @@
 .affichage-description>*>*>div,
 .affichage-description h4 {
     padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 

@@ -12,13 +12,14 @@
         </div>-->
     </section>
     <section class="affichage-description">
+        <form action="../edit/{{timbre.idTimbre}}" method="POST" enctype="multipart/form-data">
         <header>
             <div> <a href="{{path}}/catalogue"><i class="fa-solid fa-caret-left"></i> Retour dans le catalogue</a> </div>
             <div> <a href="#"><i class="fa-regular fa-star"></i></a> <a href="#"><i class="fa-regular fa-bell"></i></a> </div>
         </header>
         <article>
             <div class="description-titre">
-                <h1>{{ timbre.titre }}</h1>
+                <h1><input type="text" name="titre" id="titre" value="{{ timbre.titre }}"></h1>
                 <h3>#{{ timbre.idTimbre }}</h3> </div>
             <div class="description-prix">
                 <div class="prix-liste">
@@ -33,13 +34,20 @@
             </div>
             <div class="description-info">
                 <h4><i>Dates des enchères:</i></h4>
-                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2> </div>
+                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2>
+                <h2><input type="date" name="dateDebut" id="dateDebut"> - <input type="date" name="dateFin" id="dateFin"></h2>
 
-                <h4><i>Couleur:</i> {{ timbre.couleur }}</h5>
+                <h4><i>Couleur:</i> <input type="text" name="couleur" value="{{ timbre.couleur }}"></h5>
 
-                <h4><i>Dimensions:</i> {{ timbre.dimensions }}</h5>
+                <h4><i>Dimensions:</i> <input type="text" name="dimensions" value="{{ timbre.dimensions }}"></h5>
 
-                <h4><i>Pays:</i> {{ timbre.pays }}</h4>
+                <h4><i>Pays:</i> <input type="text" name="pays" value="{{ timbre.pays }}"></h4>
+            </div>
+            <div class="description-info">
+                <h4><i>Dates des enchères:</i></h4>
+                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2>
+                <h2><input type="date" name="dateDebut" id="dateDebut"> - <input type="date" name="dateFin" id="dateFin"></h2>
+            </div>
         </article>
         <footer>
             <div>
@@ -62,6 +70,8 @@
                 <h5>Returns:</h5>
                 <p>Aucune retour est accepté</p>
             </div>
+            <input type="submit" value="Sauvegarder" class="btn-standart">
         </footer>
+    </form>
     </section>
 </main> {% endblock %}

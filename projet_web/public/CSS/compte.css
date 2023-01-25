@@ -20,6 +20,9 @@
     align-self: center;
     margin-left: 50px;
     padding-right: 20px;
+
+    width: 200px;
+    min-width: 200px;
     border-right: 2px solid var(--color__white-ligth);
 }
 
@@ -54,7 +57,7 @@
 
 .cartes-liste {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 15px;
     width: 100%;
     align-content: start;
@@ -82,7 +85,34 @@
     background-color: darkred;
 }
 
+.carte .modifier {
+    color: black;
+    border-color: gray;
+}
+
+.carte .modifier:hover {
+    color: white;
+    border-color: gray;
+    background-color: gray;
+}
+
 .carte header a{
     padding-top: 8px;
     padding-bottom: 8px;
+}
+
+.carte header {
+    min-height: 60%;
+    position: relative;
+}
+
+.carte header>div {
+    margin-top: auto;
+    align-items: end;
+    position: absolute;
+    bottom: 20px;
+}
+
+.carte header>div small{
+    padding-left: 10px;
 }

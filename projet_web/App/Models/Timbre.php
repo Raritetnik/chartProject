@@ -12,7 +12,7 @@ use PDO;
 class Timbre extends \Core\Model
 {
 
-    protected static $fillable = ['idTimbre','titre', 'dateCreation', 'couleur', 'pays', 'etat', 'tirage', 'dimensions', 'certifier'];
+    protected static $fillable = ['idTimbre','titre', 'dateCreation', 'couleur', 'pays', 'etat', 'tirage', 'dimensions', 'certifier', 'Membre_id'];
     /**
      * Get all the users as an associative array
      *
@@ -65,6 +65,38 @@ class Timbre extends \Core\Model
         foreach($data_map as $key=>$value){
             $stmt->bindValue(":$key", $value);
         }
+
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+    }
+
+    public static function updateEnchereDeTimbre($idEnchere, $idTimbre) {
+        $pdo = static::getDB();
+        $stmt = $pdo->prepare("UPDATE Timbre SET Timbre.Enchere_id = '$idEnchere' WHERE Timbre.idTimbre = '$idTimbre'");
+
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+    }
+
+    public static function save($data) {
+        $pdo = static::getDB();
+        extract($data);
+        $stmt = $pdo->prepare("UPDATE Timbre SET `titre` = '$titre', `couleur` = '$couleur', `pays` = '$pays', `dimensions` = '$dimensions' WHERE Timbre.idTimbre = '$idTimbre'");
+
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+    }
+
+    public static function delete($id){
+        $pdo = static::getDB();
+        $stmt = $pdo->prepare("DELETE FROM Timbre
+        WHERE Timbre.idTimbre = '$id'");
 
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
