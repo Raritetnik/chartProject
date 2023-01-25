@@ -10,7 +10,7 @@
  * Composer
  */
 require dirname(__DIR__) . '/vendor/autoload.php';
-
+setlocale (LC_TIME, 'fr_FR.utf8','fra');
 session_start();
 /**
  * Error and Exception handling
@@ -27,10 +27,10 @@ $router = new Core\Router();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('catalogue', ['controller' => 'Enchere', 'action' => 'index']);
+$router->add('catalogue', ['controller' => 'Timbre', 'action' => 'catalogue']);
 $router->add('enchere', ['controller' => 'Enchere', 'action' => 'index']);
 
 $router->add('{controller}/{action}');
-$router->add('{controller}/{action}/{id}');
+$router->add('{controller}/{action}/{id:\w+}');
 
 $router->dispatch($_SERVER['QUERY_STRING']);

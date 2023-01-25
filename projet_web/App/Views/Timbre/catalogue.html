@@ -64,72 +64,19 @@
     <section class="grille">
 
       <!-- ***************************************************************************** -->
-      {% for enchere in encheres %}
-      <div class="carte"> <img src="{{ enchere.url }}" alt="">
+      {% for timbre in timbres %}
+      <div class="carte"> <img src="{{ timbre.url }}" alt="">
           <header>
-              <h4 class="title">{{ enchere.titre }}</h4>
-              <small><i>Date limite: {{ enchere.dateFin }}</i></small>
+              <h4 class="title">{{ timbre.Nom }}</h4>
+              <small><i>Date limite: {{ timbre.dateFin }}</i></small>
               <div>
-                <a href="enchere/show/{{ enchere.idEnchere }}"><i class="fa-solid fa-hand-point-up"></i></a>
-                <h1>CA${{ enchere.prixPlancher }}.00</h1>
+                <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                <h1>CA${{ timbre.prixPlancher }}</h1>
               </div>
           </header>
       </div>
       {% endfor %}
       <!-- ***************************************************************************** -->
-
-      <div class="carte"> <img src="Assets/Catalogue/czech-republic-circa-1994-stamp-600w-246744580.webp" alt="">
-          <header>
-              <h4 class="title">Czech Repub. circa 1994 stamp #24576</h4>
-              <small><i>Date limite: 25 janvier 2023</i></small>
-              <div>
-                <a href="enchere/show/{{ idEnchere }}"><i class="fa-solid fa-hand-point-up"></i></a>
-                <h1>CA$12.99</h1>
-              </div>
-          </header>
-      </div>
-        <div class="carte"> <img src="Assets/Catalogue/mali-circa-1961-stamp-printed-600w-92957170.webp" alt="">
-            <header>
-                <h4 class="title">Mali Circa 1961, 1F, en couleur NEUVE #95223 </h4> <small><i>Date limite: 25 janvier 2023</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$61.99</h1></div>
-            </header>
-        </div>
-        <div class="carte"> <img src="Assets/Catalogue/milan-italy-april-21-2022-600w-2151892315.webp" alt="">
-            <header>
-                <h4 class="title">VIVIENDA C. blue OLD plage  #15321 </h4> <small><i>Date limite: 25 janvier 2023</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$721.00</h1></div>
-            </header>
-        </div>
-        <div class="carte"> <img src="Assets/Catalogue/milan-italy-january-20-2014-600w-1852248658.webp" alt="">
-            <header>
-                <h4 class="title">Mali Circa, 1Franc en couleur jaune 2014 #32351 </h4> <small><i>Date limite: 25 janvier 2023</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$82.39</h1></div>
-            </header>
-        </div>
-        <div class="carte"> <img src="Assets/Catalogue/milan-italy-january-24-2022-600w-2126397926.webp" alt="">
-            <header>
-                <h4 class="title">New Zealand 3D noir et blanc #22411 </h4> <small><i>Date limite: 8 septembre 2024</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$12.99</h1></div>
-            </header>
-        </div>
-        <div class="carte"> <img src="Assets/Catalogue/morocco-circa-1948-postage-stamp-600w-2176056605.webp" alt="">
-            <header>
-                <h4 class="title">MAROC 1.50FR blue light timbre 1948 #21112 </h4> <small><i>Date limite: 31 decembre 2023</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$412.73</h1></div>
-            </header>
-        </div>
-        <div class="carte"> <img src="Assets/Catalogue/tanzania-circa-1994-stamp-printed-600w-182933078.webp" alt="">
-            <header>
-                <h4 class="title">Tanzania TZA, timbre eleph 2010 #24122 </h4> <small><i>Date limite: 21 fevrier 2023</i></small>
-                <div><a href="enchere"><i class="fa-solid fa-hand-point-up"></i></a>
-                    <h1>CA$15.99</h1></div>
-            </header>
-        </div>
     </section>
 </main>
 <footer class="pied-de-page">

@@ -12,7 +12,7 @@ use PDO;
 class Enchere extends \Core\Model
 {
 
-    protected static $fillable = ['dateDebut', 'dateFin', 'prixPlancher', 'quantiteMise', 'Timbre_id'];
+    protected static $fillable = ['dateDebut', 'dateFin', 'prixPlancher', 'quantiteMise'];
     /**
      * Get all the users as an associative array
      *
@@ -21,11 +21,7 @@ class Enchere extends \Core\Model
     public static function getAll()
     {
         $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Enchere
-        INNER JOIN Timbre
-        ON Enchere.Timbre_id = idTimbre
-        LEFT JOIN Image
-        ON idTimbre = Image.Timbre_id');
+        $stmt = $pdo->query('SELECT * FROM Enchere');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

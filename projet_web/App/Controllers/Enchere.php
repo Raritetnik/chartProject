@@ -18,6 +18,7 @@ class Enchere extends \Core\Controller
 
     public function indexAction()
     {
+        echo (uniqid());
         $encheres = modelEch::getAll();
         View::renderTemplate('Enchere/index.html', ['encheres' => $encheres]);
     }

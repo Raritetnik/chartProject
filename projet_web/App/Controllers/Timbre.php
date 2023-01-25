@@ -2,11 +2,15 @@
 
 namespace App\Controllers;
 
+
 use \Core\View;
 use \App\Models\Timbre as model;
 use \App\Models\Image as modelImage;
 
 use \Core\Validation;
+use DateTime;
+use IntlDateFormatter;
+
 
 /**
  * Catalogue controller
@@ -22,6 +26,21 @@ class Timbre extends \Core\Controller
         View::renderTemplate('Timbre/index.html', ['timbres' => $timbres]);
     }
 
+    public function catalogueAction()
+    {
+        $timbres = model::getAllwithEnchere();
+        View::renderTemplate('Timbre/catalogue.html', ['timbres' => $timbres]);
+    }
+
+    public function showAction()
+    {
+        $id = $this->route_params['id'];
+        $timbres = model::getTimbre($id);
+        setlocale(LC_TIME, 'fr_CA');
+        $timbres[0]['dateFin'] = date('d F Y' , strtotime($timbres[0]['dateFin']));
+        View::renderTemplate('Timbre/show.html', ['timbre' => $timbres[0]]);
+    }
+
     public function createAction() {
         $timbres = model::getAll();
         View::renderTemplate('Timbre/creation.html', ['timbres' => $timbres]);
@@ -33,12 +52,10 @@ class Timbre extends \Core\Controller
         $timbre['idTimbre'] = uniqid();
 
         extract($timbre);
-        //$validation->name('prixPlancher')->value($prixPlancher)->pattern('int')->required()->max(15);
-        //$validation->name('quantiteMise')->value($quantiteMise)->pattern('int')->required()->max(2);
+        $validation->name('prixPlancher')->value($prixPlancher)->pattern('float')->required()->max(15);
+        $validation->name('quantiteMise')->value($quantiteMise)->pattern('int')->required()->max(2);
 
         if($validation->isSuccess()){
-            //$timbre = model::insert($timbre);
-            //$timbre = model::getTimbre($idTimbre);
             $url = Timbre::sauvegarderImage($timbre);
 
             $data['url'] = "http://localhost:8080/projet_web/public/Assets/img_Timbres/".$url;

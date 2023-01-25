@@ -25,10 +25,22 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getTimbre()
+    public static function getAllwithEnchere()
     {
         $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Timbre');
+        $stmt = $pdo->query('SELECT * FROM Timbre
+        INNER JOIN Enchere ON Timbre.Enchere_id = Enchere.idEnchere
+        INNER JOIN Image ON Timbre.idTimbre = Image.Timbre_id;');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getTimbre($id)
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->query("SELECT * FROM Timbre
+        INNER JOIN Image ON Image.Timbre_id = Timbre.idTimbre
+        INNER JOIN Enchere ON Enchere.idEnchere = Timbre.Enchere_id
+        WHERE Timbre.idTimbre = '$id' AND Image.estPrincip = 1");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

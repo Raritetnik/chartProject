@@ -1,18 +1,25 @@
-{% extends "base.html" %} {% block css %}{{path}}/CSS/carte.css{% endblock %} {% block title %}Enchere{% endblock %} {% block body %}
+{% extends "base.html" %} {% block css %}{{path}}/CSS/carte.css{% endblock %} {% block title %}Enchere{% endblock %}
+
+{% block body %}
 <main class="contenu-principale">
     <section class="affichage-images">
-        <div class="image-principale"> <i class="fa-solid fa-arrow-left"></i> <img src="{{path}}/Assets/timbre_1/timbre_1.1.webp" alt=""> <i class="fa-solid fa-arrow-right"></i> </div>
-        <div class="image-carrousel"> <img src="{{path}}/Assets/timbre_1/timbre_1.2.webp" alt="" class="carrousel-item"> <img src="{{path}}/Assets/timbre_1/timbre_1.3.webp" alt="" class="carrousel-item"> </div>
+        <div class="image-principale"> <i class="fa-solid fa-arrow-left"></i>
+            <img src="{{ timbre.url }}" alt=""> <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <!--<div class="image-carrousel">
+            <img src="{{path}}/Assets/timbre_1/timbre_1.2.webp" alt="" class="carrousel-item">
+            <img src="{{path}}/Assets/timbre_1/timbre_1.3.webp" alt="" class="carrousel-item">
+        </div>-->
     </section>
     <section class="affichage-description">
         <header>
-            <div> <a href="catalogue"><i class="fa-solid fa-caret-left"></i> Retour dans le catalogue</a> </div>
+            <div> <a href="{{path}}/catalogue"><i class="fa-solid fa-caret-left"></i> Retour dans le catalogue</a> </div>
             <div> <a href="#"><i class="fa-regular fa-star"></i></a> <a href="#"><i class="fa-regular fa-bell"></i></a> </div>
         </header>
         <article>
             <div class="description-titre">
-                <h1>timbre PAYS BAS YT 1291 Centenaire des ventes aux enchères 1987</h1>
-                <h3>#040906</h3> </div>
+                <h1>{{ timbre.Nom }}</h1>
+                <h3>#{{ timbre.idTimbre }}</h3> </div>
             <div class="description-prix">
                 <div class="prix-liste">
                     <div>
@@ -23,17 +30,13 @@
                         <h1>13,000 $</h1> </div>
                 </div>
                 <div class="action">
-                    <label for="">
-                        <input type="text" name="prixMise">
-                        <button>Miser</button>
-                    </label>
-
+                    <button>Miser</button>
                     <button>Acheter</button>
                 </div>
             </div>
             <div class="description-info">
                 <h4><i>Date finale des enchères:</i></h4>
-                <h2>12:00 AM - 24 decembre 2023 (GMT-5)</h2> </div>
+                <h2>{{ timbre.dateFin }}</h2> </div>
         </article>
         <footer>
             <div>
