@@ -25,7 +25,7 @@ class Config
     /**
      * Database user
      * @var string
-     */    const DB_USER = 'root';
+     */    const DB_USER = 'admin';
 
     /**
      * Database port

@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block css %}../CSS/autre.css{% endblock %} {% block title %}Connexion{% endblock %} {% block body %}
 <main class="contenu-principale">
     <div class="form_boite">
+        <span>{{ error|raw }}</span>
         <form action="store" class="formulaire" method="POST">
             <div>
             <label for="nom" name="nom">
@@ -40,3 +41,5 @@
             <input type="submit" value="Sauvegarder"> </form>
     </div>
 </main> {% endblock %}
+
+

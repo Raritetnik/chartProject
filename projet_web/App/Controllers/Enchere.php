@@ -36,7 +36,7 @@ class Enchere extends \Core\Controller
 
         if($validation->isSuccess()){
             $enchere = modelEch::insert($_POST);
-            header('Location: http://localhost:8080/projet_web/public/');
+            header('Location: http://localhost/projet_web/public/');
         }else{
             $errors = $validation->displayErrors();
             View::renderTemplate('Enchere/creation.html', ['errors' => $errors]);

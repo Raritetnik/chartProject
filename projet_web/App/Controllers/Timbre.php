@@ -58,11 +58,11 @@ class Timbre extends \Core\Controller
         if($validation->isSuccess()){
             $url = Timbre::sauvegarderImage($timbre);
 
-            $data['url'] = "http://localhost:8080/projet_web/public/Assets/img_Timbres/".$url;
+            $data['url'] = "http://localhost/projet_web/public/Assets/img_Timbres/".$url;
             $data['Timbre_id'] = $idTimbre;
             $data['estPrincip'] = 1;
             modelImage::insert($data);
-            header('Location: http://localhost:8080/projet_web/public/');
+            header('Location: http://localhost/projet_web/public/');
         } else {
             $errors = $validation->displayErrors();
             View::renderTemplate('Timbre/creation.html', ['errors' => $errors]);

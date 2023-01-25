@@ -29,6 +29,7 @@ $router = new Core\Router();
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('catalogue', ['controller' => 'Timbre', 'action' => 'catalogue']);
 $router->add('enchere', ['controller' => 'Enchere', 'action' => 'index']);
+$router->add('membre', ['controller' => 'Membre', 'action' => 'index']);
 
 $router->add('{controller}/{action}');
 $router->add('{controller}/{action}/{id:\w+}');

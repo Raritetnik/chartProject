@@ -25,6 +25,13 @@ class Membre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getMembre($id)
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->query("SELECT * FROM membre WHERE idMembre = $id");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function checkMembre($data) {
         extract($data);
         $pdo = static::getDB();

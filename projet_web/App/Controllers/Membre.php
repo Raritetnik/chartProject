@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use \App\Models\Membre as model;
+use \App\Models\Timbre as modelTimbre;
 use \Core\Validation;
 
 /**
@@ -23,13 +24,15 @@ class Membre extends \Core\Controller
      */
     public function indexAction()
     {
-        View::renderTemplate('Membre/connexion.html');
+        $membre = model::getMembre($_SESSION['user_id']);
+        $timbres = modelTimbre::getTimbres($_SESSION['user_id']);
+        View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres]);
     }
 
     public function signUpAction()
     {
         $membres = model::getAll();
-        View::renderTemplate('Membre/creation.html', ['membre' => $membres[0]]);
+        View::renderTemplate('Membre/creation.html');
     }
 
     public function loginAction()
@@ -47,7 +50,7 @@ class Membre extends \Core\Controller
 
             $checkUser = model::checkMembre($_POST);
             if($checkUser){
-                header('Location: http://localhost:8080/projet_web/public/');
+                header('Location: http://localhost/projet_web/public/');
             } else {
                 View::renderTemplate('Membre/connexion.html', ['errors' => $checkUser]);
             }
@@ -73,7 +76,7 @@ class Membre extends \Core\Controller
             ];
             $_POST['password']= password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
             $userInsert = model::insert($_POST);
-            header('Location: http://localhost:8080/projet_web/public/membre/login');
+            header('Location: http://localhost/projet_web/public/membre/login');
         }else{
             $errors = $validation->displayErrors();
             View::renderTemplate('Membre/creation.html', ['errors' => $errors]);
@@ -82,6 +85,6 @@ class Membre extends \Core\Controller
 
     public function logoutAction() {
         session_destroy();
-        header('Location: http://localhost:8080/projet_web/public/');
+        header('Location: http://localhost/projet_web/public/');
     }
 }

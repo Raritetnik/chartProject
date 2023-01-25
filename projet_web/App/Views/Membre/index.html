@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block css %}{{path}}/CSS/compte.css{% endblock %} {% block title %}Compte{% endblock %} {% block body %}
+<main class="menu-compte">
+    <nav class="menu">
+        <button class="info">Mes informations</button>
+        <button class="mises">Mes mises</button>
+        <button class="favoris">Mes favoris</button>
+        <button class="timbres">Mes timbres</button>
+    </nav>
+    <div class="contenu">
+        <script id="infoCompte" type="text/template">
+            <div>
+                <h3>Nom utilisateur: {{ membre.Prenom }} {{ membre.Nom }}</h3>
+                <h3>Courriel: {{ membre.username }}</h3>
+                <h3>
+                    <p>Mot de passe:  </p><input type="password">
+                </h3>
+                <h3>
+                    <p>Confirmez mot de passe: </p><input type="password">
+                </h3>
+            </div>
+        </script>
+
+        <script id="favoris" type="text/template">
+            <div>
+                <h3>Liste des favoris</h3>
+
+            </div>
+        </script>
+
+        <script id="listeMises" type="text/template">
+            <div>
+                <h3>Liste des mises</h3>
+
+            </div>
+        </script>
+
+        <script id="listeTimbres" type="text/template">
+            <h3>Liste des timbres</h3>
+            <div class='cartes-liste'>
+                {% for timbre in timbres %}
+                <div class="carte"> <img src="{{ timbre.url }}" alt="">
+                    <header>
+                        <h4 class="title">{{ timbre.Nom }}</h4>
+                        <div>
+                          <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                          <a href="timbre/supprimer/{{ timbre.idTimbre }}" class='supprimer'><i class="fa-solid fa-x"></i></a>
+                          <small>{{ timbre.dateCreation }}</small>
+                        </div>
+                    </header>
+                </div>
+                {% endfor %}
+            </div>
+        </script>
+
+    </div>
+    <script src="{{path}}/script/gest_compte.js"></script>
+</main> {% endblock %}
