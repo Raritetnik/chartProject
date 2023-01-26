@@ -36,19 +36,19 @@
         <script id="listeMises" type="text/template">
             <div>
                 <h3>Liste des mises</h3>
-                <p><a href="enchere/create" class="btn-standart">Afficher une enchère</a></p>
                 <div class='cartes-liste'>
-                    {% for enchere in encheres %}
-                        <header>
-                            <h4 class="title">{{ enchere.titre }}</h4>
-                            <div>
-                            <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
-                            <a href="timbre/supprimer/{{ timbre.idTimbre }}" class='supprimer'><i class="fa-solid fa-x"></i></a>
-                            <small>{{ enchere.dateCreation }}</small>
-                            </div>
-                        </header>
-                    </div>
-                    {% endfor %}
+                {% for mise in mises %}
+                <div class="carte"> <img src="{{ mise.url }}" alt="">
+                    <header>
+                        <h4 class="title">{{ mise.titre }}</h4>
+                        <div>
+                          <a href="timbre/show/{{ timbre.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                          <p>Votre mise: {{ mise.prixMise }}</p>
+                          <p>Date de mise: {{ mise.dateMise }}</p>
+                        </div>
+                    </header>
+                </div>
+                {% endfor %}
                 </div>
             </div>
         </script>

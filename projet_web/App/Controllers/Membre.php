@@ -30,7 +30,9 @@ class Membre extends \Core\Controller
 
         $membre = model::getMembre($_SESSION['user_id']);
         $timbres = modelTimbre::getTimbres($_SESSION['user_id']);
-        View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres]);
+        $mises = modelTimbre::getAllMises($_SESSION['user_id']);
+
+        View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres, 'mises' => $mises]);
     }
 
     public function signUpAction()

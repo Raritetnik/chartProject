@@ -41,9 +41,12 @@ class Timbre extends \Core\Controller
         $id = $this->route_params['id'];
         $timbre = model::getTimbre($id);
         $mise = modelMise::getMise($id);
+
+        $mise['prixMise'] = number_format((float)$mise['prixMise'], 2, '.', '');
+        $timbre['prixPlancher'] = number_format((float)$timbre['prixPlancher'], 2, '.', '');
         setlocale(LC_TIME, 'fr_CA');
-        $timbre['dateFin'] = date('d F Y' , strtotime($timbre['dateFin']));
-        $timbre['dateDebut'] = date('d F Y' , strtotime($timbre['dateDebut']));
+        $timbre['dateFin'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
+        $timbre['dateDebut'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
         View::renderTemplate('Timbre/show.html', ['timbre' => $timbre, 'mise' => $mise]);
     }
 
@@ -87,13 +90,12 @@ class Timbre extends \Core\Controller
     {
         CheckSession::sessionAuth();
 
-
         $id = $this->route_params['id'];
-        $timbres = model::getTimbre($id);
+        $timbre = model::getTimbre($id);
         setlocale(LC_TIME, 'fr_CA');
-        $timbres[0]['dateFin'] = date('d F Y' , strtotime($timbres[0]['dateFin']));
-        $timbres[0]['dateDebut'] = date('d F Y' , strtotime($timbres[0]['dateDebut']));
-        View::renderTemplate('Timbre/edit.html', ['timbre' => $timbres[0]]);
+        $timbre['dateFin'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
+        $timbre['dateDebut'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
+        View::renderTemplate('Timbre/edit.html', ['timbre' => $timbre]);
     }
 
     public function editAction()
@@ -136,7 +138,7 @@ class Timbre extends \Core\Controller
 
     public function miserAction() {
         $_POST['Timbre_id'] = $this->route_params['id'];
-        $_POST['dateMise'] = date('y-m-d');
+        $_POST['dateMise'] = date('y-m-d h:i:s');
         $_POST['Membre_id'] = $_SESSION['user_id'];
         modelMise::insert($_POST);
         header("Location: http://localhost:8080/projet_web/public/timbre/show/".$_POST['Timbre_id']);

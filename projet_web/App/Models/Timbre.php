@@ -34,6 +34,24 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getAllMises($id)
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->prepare("SELECT * FROM Timbre
+        INNER JOIN Image ON Timbre.idTimbre = Image.Timbre_id
+        INNER JOIN Mise ON Mise.Timbre_id = Timbre.idTimbre
+        WHERE Mise.Membre_id = :id ORDER BY Mise.prixMise DESC LIMIT 1;");
+
+        echo($id);
+        $stmt->bindValue(':id', $id);
+
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public static function getTimbres($id)
     {
         $pdo = static::getDB();

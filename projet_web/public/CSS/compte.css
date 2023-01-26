@@ -106,10 +106,13 @@
     position: relative;
 }
 
+.carte header .title {
+    padding-bottom: 5px;
+}
+
 .carte header>div {
     margin-top: auto;
     align-items: end;
-    position: absolute;
     bottom: 20px;
 }
 

@@ -34,7 +34,7 @@
                     {% if guest %}
 
                     {% else %}
-                        <input type="text" name="prixMise" class="prixMise">
+                        <input type="number" name="prixMise" class="prixMise" min="0.00" max="10000.00" step="0.01" value="{{mise.prixMise}}"/>
                         <input type="submit" class="btn-standart" id="miserAction" value="Miser">
                         <input type="submit" class="btn-standart" id="acheterAction" value="Acheter">
                         <input type="hidden" name="Enchere_id" value="{{timbre.Enchere_id}}">
@@ -43,7 +43,7 @@
             </div>
             <div class="description-info">
                 <h4><i>Dates des enchères:</i></h4>
-                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2> </div>
+                <h2>{{ timbre.dateDebut }} <br> {{ timbre.dateFin }}</h2> </div>
 
                 <h4><i>Couleur:</i> {{ timbre.couleur }}</h5>
 
