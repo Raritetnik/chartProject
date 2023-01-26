@@ -7,6 +7,7 @@ use \Core\View;
 use \App\Models\Timbre as model;
 use \App\Models\Image as modelImage;
 use \App\Models\Enchere as modelEnchere;
+use \App\Models\Mise as modelMise;
 
 
 use \Core\Validation;
@@ -38,11 +39,12 @@ class Timbre extends \Core\Controller
     public function showAction()
     {
         $id = $this->route_params['id'];
-        $timbres = model::getTimbre($id);
+        $timbre = model::getTimbre($id);
+        $mise = modelMise::getMise($id);
         setlocale(LC_TIME, 'fr_CA');
-        $timbres[0]['dateFin'] = date('d F Y' , strtotime($timbres[0]['dateFin']));
-        $timbres[0]['dateDebut'] = date('d F Y' , strtotime($timbres[0]['dateDebut']));
-        View::renderTemplate('Timbre/show.html', ['timbre' => $timbres[0]]);
+        $timbre['dateFin'] = date('d F Y' , strtotime($timbre['dateFin']));
+        $timbre['dateDebut'] = date('d F Y' , strtotime($timbre['dateDebut']));
+        View::renderTemplate('Timbre/show.html', ['timbre' => $timbre, 'mise' => $mise]);
     }
 
     public function createAction() {
@@ -128,5 +130,15 @@ class Timbre extends \Core\Controller
 
         // Nom fichier
         return (explode('\\', $filename)[count(explode('\\', $filename))-1]);
+    }
+
+
+
+    public function miserAction() {
+        $_POST['Timbre_id'] = $this->route_params['id'];
+        $_POST['dateMise'] = date('y-m-d');
+        $_POST['Membre_id'] = $_SESSION['user_id'];
+        modelMise::insert($_POST);
+        header("Location: http://localhost:8080/projet_web/public/timbre/show/".$_POST['Timbre_id']);
     }
 }

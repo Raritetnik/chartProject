@@ -62,7 +62,7 @@ class Timbre extends \Core\Model
             print_r($stmt->errorInfo());
             die();
         }
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public static function insert($data){

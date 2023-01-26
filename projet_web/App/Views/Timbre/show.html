@@ -23,13 +23,23 @@
             <div class="description-prix">
                 <div class="prix-liste">
                     <div>
+                        <h4><i>Prix mise:</i></h4>
+                        <h1>CA$ {{ mise.prixMise }}</h1>
+                        <small>Par: {{ mise.Prenom }} {{ mise.Nom }}</small>
                         <h4><i>Prix plancher:</i></h4>
-                        <h1>CA$ {{ timbre.prixPlancher }}</h1> </div>
+                        <h1>CA$ {{ timbre.prixPlancher }}</h1>
+                    </div>
                 </div>
-                <div class="action">
-                    <button>Miser</button>
-                    <button>Acheter</button>
-                </div>
+                <form action="../miser/{{ timbre.idTimbre }}" class="action" method="POST">
+                    {% if guest %}
+
+                    {% else %}
+                        <input type="text" name="prixMise" class="prixMise">
+                        <input type="submit" class="btn-standart" id="miserAction" value="Miser">
+                        <input type="submit" class="btn-standart" id="acheterAction" value="Acheter">
+                        <input type="hidden" name="Enchere_id" value="{{timbre.Enchere_id}}">
+                    {% endif %}
+                </form>
             </div>
             <div class="description-info">
                 <h4><i>Dates des enchères:</i></h4>
@@ -64,4 +74,6 @@
             </div>
         </footer>
     </section>
-</main> {% endblock %}
+</main>
+<script src="{{path}}/script/timbre.js"></script>
+{% endblock %}

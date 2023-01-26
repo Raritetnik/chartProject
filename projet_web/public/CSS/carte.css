@@ -181,6 +181,11 @@
     padding: 5px;
 }
 
+.prixMise {
+    padding: 2px;
+    font-style: 11px;
+}
+
 .description-prix> * {
     display: flex;
     flex-direction: column;

@@ -91,9 +91,11 @@ CREATE TABLE IF NOT EXISTS `Mise` (
   `dateMise` DATE NOT NULL,
   `Membre_id` INT(11) NOT NULL,
   `Enchere_id` INT(11) NOT NULL,
-  PRIMARY KEY (`idMise`, `Membre_id`),
+  `Timbre_id` VARCHAR(14) NOT NULL,
+  PRIMARY KEY (`idMise`),
   INDEX `fk_Mise_Membre1_idx` (`Membre_id` ASC) ,
   INDEX `fk_Mise_Enchere1_idx` (`Enchere_id` ASC) ,
+  INDEX `fk_Mise_Timbre1_idx` (`Timbre_id` ASC) ,
   CONSTRAINT `fk_Mise_Membre1`
     FOREIGN KEY (`Membre_id`)
     REFERENCES `Membre` (`idMembre`)
@@ -102,6 +104,11 @@ CREATE TABLE IF NOT EXISTS `Mise` (
   CONSTRAINT `fk_Mise_Enchere1`
     FOREIGN KEY (`Enchere_id`)
     REFERENCES `Enchere` (`idEnchere`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Mise_Timbre1`
+    FOREIGN KEY (`Timbre_id`)
+    REFERENCES `Timbre` (`idTimbre`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -129,8 +136,8 @@ CREATE TABLE IF NOT EXISTS `Facture` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Facture_Mise1`
-    FOREIGN KEY (`Mise_id` , `Mise_Membre_id`)
-    REFERENCES `Mise` (`idMise` , `Membre_id`)
+    FOREIGN KEY (`Mise_Membre_id`)
+    REFERENCES `Mise` (`Membre_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -198,19 +205,19 @@ VALUES ('Dormov','Peter','moderator@gmail.com','$2y$10$uR/cUY.aa3jZcmtO1QLOwezqR
 INSERT INTO `membre`( `Nom`, `Prenom`, `username`, `password`, `adresse`, `phone`, `zipCode`) 
 VALUES ('Rodreguez','Andrey','user@gmail.com','$2y$10$uR/cUY.aa3jZcmtO1QLOwezqRhWNqPfihUD9OkvOXklSHOvjLe/OS','2525 rue de Belle','514-222-5422','H4RL0F');
 
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d0388b5f9a7', 'Czech Repub. circa 1994 stamp #24576','2022-06-06','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,5,1);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038cc41a04', 'Mali Circa 1961, 1F, en couleur NEUVE #95223 ','2022-06-06','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,5,1);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038d1e8578', 'VIVIENDA C. blue OLD plage #15321 ','2022-06-06','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,1,2);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038d63881a', 'Mali Circa, 1Franc en couleur jaune 2014 #32351','2022-06-06','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,1,2);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038da75da0', 'New Zealand 3D noir et blanc #22411','2022-03-26','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,3,3);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038df64e89', 'MAROC 1.50FR blue light timbre 1948 #21112 ','2022-06-06','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,2,1);
-INSERT INTO `timbre`( `idTimbre`, `Nom`, `dateCreation`, `couleur`, `pays`, `condition`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+INSERT INTO `timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038e31d59a', 'Tanzania TZA, timbre eleph 2010 #24122','2022-10-24','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,5,3);
 
 INSERT INTO `image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://localhost:8080/projet_web/public/Assets/img_Timbres/tim_1.webp', 1,'63d0388b5f9a7');
