@@ -46,8 +46,9 @@ class Image extends \Core\Model
     public static function deleteTimbre($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Image
-        WHERE Image.Timbre_id = '$id'");
+        WHERE Image.Timbre_id = :id");
 
+        $stmt->bindValue(":id", $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             die();

@@ -29,7 +29,13 @@ class Membre extends \Core\Model
     public static function getMembre($id)
     {
         $pdo = static::getDB();
-        $stmt = $pdo->query("SELECT * FROM membre WHERE idMembre = $id");
+        $stmt = $pdo->prepare("SELECT * FROM membre WHERE idMembre = :id");
+
+        $stmt->bindValue(":id", $id);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -46,7 +52,6 @@ class Membre extends \Core\Model
 
                 session_regenerate_id();
                 $_SESSION['user_id'] = $user['idMembre'];
-                //$_SESSION['privilege_id'] = $user_info['privilege_id'];
                 $_SESSION['fingerPrint'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
 
                 return true;
@@ -85,8 +90,10 @@ class Membre extends \Core\Model
         $password = password_hash($data['password'], PASSWORD_BCRYPT, $options);
         $id = $_SESSION['user_id'];
 
-        $stmt = $pdo->prepare("UPDATE Membre SET Membre.password = '$password' WHERE idMembre = '$id'");
+        $stmt = $pdo->prepare("UPDATE Membre SET Membre.password = :password WHERE idMembre = :id");
 
+        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':id', $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             die();

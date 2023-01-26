@@ -7,6 +7,7 @@ use \App\Models\Enchere as modelEch;
 use \App\Models\Timbre as modelTimb;
 
 use \Core\Validation;
+use \Core\CheckSession;
 
 /**
  * Catalogue controller
@@ -18,17 +19,20 @@ class Enchere extends \Core\Controller
 
     public function indexAction()
     {
-        echo (uniqid());
         $encheres = modelEch::getAll();
         View::renderTemplate('Enchere/index.html', ['encheres' => $encheres]);
     }
 
     public function createAction() {
+        CheckSession::sessionAuth();
+
         $timbres = modelTimb::getAll();
         View::renderTemplate('Enchere/creation.html', ['timbres' => $timbres]);
     }
 
     public function storeAction() {
+        CheckSession::sessionAuth();
+
         $validation = new Validation;
         extract($_POST);
         $validation->name('prixPlancher')->value($prixPlancher)->pattern('float')->required()->max(15);
@@ -37,7 +41,6 @@ class Enchere extends \Core\Controller
         if($validation->isSuccess()){
             $enchereId = modelEch::insert($_POST);
             $timbreId = $_POST['Timbre_id'];
-            echo ($enchereId . ' -- ' . $timbreId);
             modelTimb::updateEnchereDeTimbre($enchereId, $timbreId);
             header('Location: http://localhost:8080/projet_web/public/');
         }else{

@@ -7,6 +7,7 @@ use \App\Models\Membre as model;
 use \App\Models\Timbre as modelTimbre;
 use \App\Models\Enchere as modelEnchere;
 use \Core\Validation;
+use \Core\CheckSession;
 
 /**
  * Membre controller
@@ -25,15 +26,15 @@ class Membre extends \Core\Controller
      */
     public function indexAction()
     {
+        CheckSession::sessionAuth();
+
         $membre = model::getMembre($_SESSION['user_id']);
         $timbres = modelTimbre::getTimbres($_SESSION['user_id']);
-
         View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres]);
     }
 
     public function signUpAction()
     {
-        $membres = model::getAll();
         View::renderTemplate('Membre/creation.html');
     }
 
@@ -86,6 +87,8 @@ class Membre extends \Core\Controller
     }
 
     public function changerAction() {
+        CheckSession::sessionAuth();
+
         model::updatePassword($_POST);
         header('Location: http://localhost:8080/projet_web/public/');
     }

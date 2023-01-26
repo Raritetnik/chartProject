@@ -8,7 +8,9 @@ use \App\Models\Timbre as model;
 use \App\Models\Image as modelImage;
 use \App\Models\Enchere as modelEnchere;
 
+
 use \Core\Validation;
+use \Core\CheckSession;
 use DateTime;
 use IntlDateFormatter;
 
@@ -44,11 +46,15 @@ class Timbre extends \Core\Controller
     }
 
     public function createAction() {
+        CheckSession::sessionAuth();
+
         $timbres = model::getAll();
         View::renderTemplate('Timbre/creation.html', ['timbres' => $timbres]);
     }
 
     public function storeAction() {
+        CheckSession::sessionAuth();
+
         $validation = new Validation;
         $timbre = $_POST;
         $timbre['idTimbre'] = uniqid();
@@ -62,14 +68,13 @@ class Timbre extends \Core\Controller
             model::insert($timbre);
 
 
-            $url = Timbre::sauvegarderImage($timbre);
+            $url = Timbre::sauvegarderImage();
             $data['url'] = "http://localhost:8080/projet_web/public/Assets/img_Timbres/".$url;
             $data['Timbre_id'] = $idTimbre;
             $data['estPrincip'] = 1;
             modelImage::insert($data);
             header('Location: http://localhost:8080/projet_web/public/');
         } else {
-            echo ('FFFFFF');
             $errors = $validation->displayErrors();
             print_r($errors);
             View::renderTemplate('Timbre/creation.html', ['errors' => $errors]);
@@ -78,6 +83,9 @@ class Timbre extends \Core\Controller
 
     public function modifierAction()
     {
+        CheckSession::sessionAuth();
+
+
         $id = $this->route_params['id'];
         $timbres = model::getTimbre($id);
         setlocale(LC_TIME, 'fr_CA');
@@ -88,6 +96,8 @@ class Timbre extends \Core\Controller
 
     public function editAction()
     {
+        CheckSession::sessionAuth();
+
         $id = $this->route_params['id'];
         $_POST['idTimbre'] = $id;
         print_r($_POST);
@@ -96,6 +106,8 @@ class Timbre extends \Core\Controller
     }
 
     public function supprimerAction() {
+        CheckSession::sessionAuth();
+
         $id = $this->route_params['id'];
         modelImage::deleteTimbre($id);
         if (count(modelEnchere::getEncheres($id)) > 1) {
@@ -104,7 +116,8 @@ class Timbre extends \Core\Controller
         $timbres = model::delete($id);
     }
 
-    public static function sauvegarderImage($data) {
+    public static function sauvegarderImage() {
+
         $info = pathinfo($_FILES['imageFichier']['name']);
         $ext = $info['extension']; // get the extension of the file
 

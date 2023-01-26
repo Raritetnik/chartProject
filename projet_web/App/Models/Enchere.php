@@ -28,8 +28,14 @@ class Enchere extends \Core\Model
     public static function getEncheres($id)
     {
         $pdo = static::getDB();
-        $stmt = $pdo->query("SELECT * FROM Enchere
-        WHERE Enchere.Membre_id = '$id'");
+        $stmt = $pdo->prepare("SELECT * FROM Enchere
+        WHERE Enchere.Membre_id = :id");
+
+        $stmt->bindValue(":id", $id);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -55,8 +61,9 @@ class Enchere extends \Core\Model
     public static function deleteTimbre($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Enchere
-        WHERE Enchere.Timbre_id = '$id'");
+        WHERE Enchere.Timbre_id = :id");
 
+        $stmt->bindValue(":id", $id);
         if(!$stmt->execute()){
             print_r($stmt->errorInfo());
             die();

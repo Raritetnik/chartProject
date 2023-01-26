@@ -56,7 +56,7 @@ class View
         }
         $twig->addGlobal('guest', $guest);
 
-        $twig->addGlobal('path', "http://".$_SERVER['SERVER_NAME'].'/projet_web/public');
+        $twig->addGlobal('path', "http://".$_SERVER['SERVER_NAME'].':8080/projet_web/public');
 
         echo $twig->render($template, $args);
     }
