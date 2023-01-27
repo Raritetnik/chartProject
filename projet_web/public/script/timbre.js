@@ -1,21 +1,18 @@
 window.onload = (e) => {
-    const miseBTN = document.querySelector('#miserAction');
+            const input = document.querySelector('#inputTest');
+            const btn = document.querySelector('#btn');
+            const text = document.querySelector('#text');
 
-    /*miseBTN.addEventListener('mousedown', (e) => {
-        document.cookie = "prixMise=25.99";
-        const prixMise = document.querySelector('.prixMise').value;
-
-        const params = {
-            misePrix: 25.99,
-        };
-        const options = {
-            method: 'POST',
-            body: '22.99'
-        };
-        fetch('http://localhost:8080/projet_web/App/Functions/registreMise.php', options )
-            .then( response => response.text() )
-            .then( response => {
-                console.log(response);
-            } );
-    });*/
-}
+            btn.addEventListener('mousedown', (e) => {
+                let a = input.value;
+                fetch('https://localhost/php-mvc/public/getDBTimbre', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: input.value
+                })
+                .then((data) => data.text())
+                .then(data => {
+                    text.innerHTML = data;
+                });
+            });
+        }
