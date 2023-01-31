@@ -52,8 +52,8 @@ class Timbre extends \Core\Controller
         }
         $timbre['prixPlancher'] = number_format((float)$timbre['prixPlancher'], 2, '.', '');
         setlocale(LC_TIME, 'fr_CA');
-        $timbre['dateFin'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
-        $timbre['dateDebut'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
+        $timbre['dateFinName'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
+        $timbre['dateDebutName'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
 
         View::renderTemplate('Timbre/show.html', ['timbre' => $timbre, 'mise' => $mise]);
     }
@@ -82,11 +82,11 @@ class Timbre extends \Core\Controller
 
 
             $url = Timbre::sauvegarderImage();
-            $data['url'] = "http://localhost/projet_web/public/Assets/img_Timbres/".$url;
+            $data['url'] = "http://".$_SERVER['SERVER_NAME']."/projet_web/public/Assets/img_Timbres/".$url;
             $data['Timbre_id'] = $idTimbre;
             $data['estPrincip'] = 1;
             modelImage::insert($data);
-            header('Location: http://localhost/projet_web/public/');
+            header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
         } else {
             $errors = $validation->displayErrors();
             print_r($errors);
@@ -100,9 +100,10 @@ class Timbre extends \Core\Controller
 
         $id = $this->route_params['id'];
         $timbre = model::getTimbre($id);
+
         setlocale(LC_TIME, 'fr_CA');
-        $timbre['dateFin'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
-        $timbre['dateDebut'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
+        $timbre['dateFinName'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
+        $timbre['dateDebutName'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
         View::renderTemplate('Timbre/edit.html', ['timbre' => $timbre]);
     }
 
@@ -114,7 +115,7 @@ class Timbre extends \Core\Controller
         $_POST['idTimbre'] = $id;
         print_r($_POST);
         model::save($_POST);
-        header("Location: http://localhost/projet_web/public/timbre/show/$id");
+        header("Location: http://".$_SERVER['SERVER_NAME']."/projet_web/public/timbre/show/$id");
     }
 
     public function supprimerAction() {
@@ -149,6 +150,6 @@ class Timbre extends \Core\Controller
         $_POST['dateMise'] = date('y-m-d h:i:s');
         $_POST['Membre_id'] = $_SESSION['user_id'];
         modelMise::insert($_POST);
-        header("Location: http://localhost/projet_web/public/timbre/show/".$_POST['Timbre_id']);
+        header("Location: http://".$_SERVER['SERVER_NAME']."/projet_web/public/timbre/show/".$_POST['Timbre_id']);
     }
 }

@@ -6,6 +6,7 @@ use \Core\View;
 use \App\Models\Membre as model;
 use \App\Models\Timbre as modelTimbre;
 use \Core\Validation;
+use \Core\CheckSession;
 
 /**
  * Membre controller
@@ -24,10 +25,12 @@ class Membre extends \Core\Controller
      */
     public function indexAction()
     {
-        $membre = model::getMembre($_SESSION['user_id']);
+        CheckSession::sessionAuth();
 
+        $membre = model::getMembre($_SESSION['user_id']);
+        $mises = modelTimbre::getAllMises($_SESSION['user_id']);
         $timbres = modelTimbre::getTimbres($_SESSION['user_id']);
-        View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres]);
+        View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres, 'mises' => $mises]);
     }
 
     public function signUpAction()
@@ -52,7 +55,7 @@ class Membre extends \Core\Controller
 
             $checkUser = model::checkMembre($_POST);
             if($checkUser){
-                header('Location: http://localhost/projet_web/public/');
+                header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
             } else {
                 View::renderTemplate('Membre/connexion.html', ['errors' => $checkUser]);
             }
@@ -78,7 +81,7 @@ class Membre extends \Core\Controller
             ];
             $_POST['password']= password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
             $userInsert = model::insert($_POST);
-            header('Location: http://localhost/projet_web/public/membre/login');
+            header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/membre/login');
         }else{
             $errors = $validation->displayErrors();
             View::renderTemplate('Membre/creation.html', ['errors' => $errors]);
@@ -87,6 +90,6 @@ class Membre extends \Core\Controller
 
     public function logoutAction() {
         session_destroy();
-        header('Location: http://localhost/projet_web/public/');
+        header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
     }
 }

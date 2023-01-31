@@ -34,19 +34,14 @@
             </div>
             <div class="description-info">
                 <h4><i>Dates des enchères:</i></h4>
-                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2>
-                <h2><input type="date" name="dateDebut" id="dateDebut"> - <input type="date" name="dateFin" id="dateFin"></h2>
+                <h2>{{ timbre.dateDebutName }} - {{ timbre.dateFinName }}</h2>
+                <!--<h2><input type="datetime-local" name="dateDebut" id="dateDebut" value="{{ timbre.dateDebut }}"> - <input type="datetime-local" name="dateFin" id="dateFin" value="{{ timbre.dateFin }}"></h2>-->
 
                 <h4><i>Couleur:</i> <input type="text" name="couleur" value="{{ timbre.couleur }}"></h5>
 
                 <h4><i>Dimensions:</i> <input type="text" name="dimensions" value="{{ timbre.dimensions }}"></h5>
 
                 <h4><i>Pays:</i> <input type="text" name="pays" value="{{ timbre.pays }}"></h4>
-            </div>
-            <div class="description-info">
-                <h4><i>Dates des enchères:</i></h4>
-                <h2>{{ timbre.dateDebut }} - {{ timbre.dateFin }}</h2>
-                <h2><input type="date" name="dateDebut" id="dateDebut"> - <input type="date" name="dateFin" id="dateFin"></h2>
             </div>
         </article>
         <footer>

@@ -42,7 +42,6 @@ class Timbre extends \Core\Model
         INNER JOIN Mise ON Mise.Timbre_id = Timbre.idTimbre
         WHERE Mise.Membre_id = :id ORDER BY Mise.prixMise DESC LIMIT 1;");
 
-        echo($id);
         $stmt->bindValue(':id', $id);
 
         if(!$stmt->execute()){
@@ -117,7 +116,8 @@ class Timbre extends \Core\Model
 
     public static function save($data) {
         $pdo = static::getDB();
-        $stmt = $pdo->prepare("UPDATE Timbre SET `titre` = :titre, `couleur` = :couleur, `pays` = :pays, `dimensions` = :dimensions WHERE Timbre.idTimbre = :idTimbre");
+        $stmt = $pdo->prepare("UPDATE Timbre SET `titre` = :titre, `couleur` = :couleur, `pays` = :pays, `dimensions` = :dimensions
+        WHERE Timbre.idTimbre = :idTimbre");
 
         foreach ($data as $key => $value) {
             $stmt->bindValue(":$key", $value);

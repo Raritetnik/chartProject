@@ -22,14 +22,14 @@ class Membre extends \Core\Model
     public static function getAll()
     {
         $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM membre');
+        $stmt = $pdo->query('SELECT * FROM Membre');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function getMembre($id)
     {
         $pdo = static::getDB();
-        $stmt = $pdo->prepare("SELECT * FROM membre WHERE idMembre = :id");
+        $stmt = $pdo->prepare("SELECT * FROM Membre WHERE idMembre = :id");
 
         $stmt->bindValue(":id", $id);
         if(!$stmt->execute()){

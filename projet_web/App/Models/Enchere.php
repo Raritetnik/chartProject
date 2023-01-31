@@ -39,6 +39,9 @@ class Enchere extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * DO THE Comments
+     */
     public static function insert($data){
         $pdo = static::getDB();
 
