@@ -29,7 +29,19 @@
         <script id="favoris" type="text/template">
             <div>
                 <h3>Liste des favoris</h3>
-
+                <div class='cartes-liste'>
+                    {% for favori in favoris %}
+                    <div class="carte"> <img src="{{ favori.url }}" alt="">
+                        <header>
+                            <h4 class="title">{{ favori.titre }}</h4>
+                            <div>
+                              <a href="timbre/show/{{ favori.idTimbre }}"><i class="fa-solid fa-hand-point-up"></i></a>
+                              <p>Date finale: {{ favori.dateFin }}</p>
+                            </div>
+                        </header>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </script>
 

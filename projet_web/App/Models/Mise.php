@@ -25,13 +25,6 @@ class Mise extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getMises()
-    {
-        $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Mise');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public static function getMise($id)
     {
         $pdo = static::getDB();

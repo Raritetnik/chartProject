@@ -40,7 +40,7 @@ class Timbre extends \Core\Model
         $stmt = $pdo->prepare("SELECT * FROM Timbre
         INNER JOIN Image ON Timbre.idTimbre = Image.Timbre_id
         INNER JOIN Mise ON Mise.Timbre_id = Timbre.idTimbre
-        WHERE Mise.Membre_id = :id ORDER BY Mise.prixMise DESC LIMIT 1;");
+        WHERE Mise.Membre_id = :id ORDER BY Mise.prixMise DESC;");
 
         $stmt->bindValue(':id', $id);
 
@@ -139,5 +139,80 @@ class Timbre extends \Core\Model
             print_r($stmt->errorInfo());
             die();
         }
+    }
+
+
+    // ============================ Filtres et Recherche =========================
+
+    public static function getFiltresCouleursTimbre()
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->query('SELECT DISTINCT couleur FROM Timbre');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getFiltresEtatTimbre()
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->query('SELECT DISTINCT etat FROM Timbre');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getFiltresPaysTimbre()
+    {
+        $pdo = static::getDB();
+        $stmt = $pdo->query('SELECT DISTINCT pays FROM Timbre');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function filtrageTimbre($filtres, $trie)
+    {
+        $pdo = static::getDB();
+        $recherche = '';
+        foreach ($filtres as $key => $valeur) {
+            if(gettype($filtres) == 'array') {
+                $filtres[$key] = "%".$valeur."%";
+            } else {
+                $filtres->$key = "%" . $valeur . "%";
+            }
+            $recherche .= "Timbre.$key LIKE :$key AND ";
+        }
+        $stmt = $pdo->prepare("SELECT * FROM Timbre
+        INNER JOIN Image ON Image.Timbre_id = Timbre.idTimbre
+        INNER JOIN Enchere ON Enchere.idEnchere = Timbre.Enchere_id
+        WHERE ".$recherche." Image.estPrincip = 1
+        ORDER BY Timbre.titre $trie;");
+
+        foreach ($filtres as $key => $valeur) {
+            $stmt->bindValue(":$key", $valeur);
+        }
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function recherche($recherche)
+    {
+        $pdo = static::getDB();
+        $recherche = '%'.$recherche.'%';
+        $stmt = $pdo->prepare("SELECT * FROM Timbre
+        INNER JOIN Image ON Image.Timbre_id = Timbre.idTimbre
+        INNER JOIN Enchere ON Enchere.idEnchere = Timbre.Enchere_id
+        WHERE Timbre.titre LIKE :recherche
+        OR Timbre.couleur LIKE :recherche
+        OR Timbre.pays LIKE :recherche
+        OR Timbre.etat LIKE :recherche
+        OR Timbre.dimensions LIKE :recherche
+        AND Image.estPrincip = 1");
+
+
+        $stmt->bindValue(":recherche", $recherche);
+        if(!$stmt->execute()){
+            print_r($stmt->errorInfo());
+            die();
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

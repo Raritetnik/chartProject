@@ -14,7 +14,14 @@
     <section class="affichage-description">
         <header>
             <div> <a href="{{path}}/catalogue"><i class="fa-solid fa-caret-left"></i> Retour dans le catalogue</a> </div>
-            <div> <a href="#"><i class="fa-regular fa-star"></i></a> <a href="#"><i class="fa-regular fa-bell"></i></a> </div>
+            <div>
+                {% if estfavoris %}
+                <i class="fa-solid fa-star" data-idEnchere="{{timbre.Enchere_id}}" id="favoris"></i>
+                {% else %}
+                <i class="fa-regular fa-star" data-idEnchere="{{timbre.Enchere_id}}" id="favoris"></i>
+                {% endif %}
+                <i class="fa-regular fa-bell" id="notification"></i>
+            </div>
         </header>
         <article>
             <div class="description-titre">
@@ -24,10 +31,10 @@
                 <div class="prix-liste">
                     <div>
                         <h4><i>Prix mise:</i></h4>
-                        <h1>CA$ {{ mise.prixMise }}</h1>
+                        <h1>CA$ {{ mise.prixMise|number_format(2, '.', ',') }}</h1>
                         <small>Par: {{ mise.Prenom }} {{ mise.Nom }}</small>
                         <h4><i>Prix plancher:</i></h4>
-                        <h1>CA$ {{ timbre.prixPlancher }}</h1>
+                        <h1>CA$ {{ timbre.prixPlancher|number_format(2, '.', ',') }}</h1>
                     </div>
                 </div>
                 <form action="../miser/{{ timbre.idTimbre }}" class="action" method="POST">
@@ -75,5 +82,5 @@
         </footer>
     </section>
 </main>
-<script src="{{path}}/script/timbre.js"></script>
+<script src="{{path}}/script/favoris.js"></script>
 {% endblock %}

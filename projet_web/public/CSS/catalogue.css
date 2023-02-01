@@ -143,9 +143,18 @@
     margin: 20px 0px;
 }
 
-.filtres .pays label{
+.filtres .filtre-option label{
     display: block;
     margin: 5px 15px;
+}
+
+.filtre-option input[type='radio'] {
+    transform: scale(1.4);
+    margin-right: 10px;
+}
+
+.filtre-option input[type='radio']:checked {
+    accent-color: var(--color__dark-vin);
 }
 
 
@@ -167,7 +176,6 @@ Catalogue des cartes dans la grille
     max-height: 300px;
     aspect-ratio: 3 / 2;
     color: black;
-    border: 1px solid var(--color__vin);
 }
 
 @media screen and (max-width: 700px) {
