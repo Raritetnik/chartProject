@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Timbre` (
   `tirage` VARCHAR(45) NULL DEFAULT NULL,
   `dimensions` VARCHAR(50) NULL DEFAULT NULL,
   `certifier` TINYINT(4) NOT NULL,
-  `Enchere_id` INT(11) NOT NULL,
+  `Enchere_id` INT(11) DEFAULT NULL,
   `Membre_id` INT(11) NOT NULL,
   PRIMARY KEY (`idTimbre`),
   INDEX `fk_Timbre_Enchere1_idx` (`Enchere_id` ASC),

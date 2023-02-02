@@ -3,8 +3,8 @@
 namespace App\Controllers;
 
 use \Core\View;
-use \App\Models\Enchere as modelEch;
-use \App\Models\Timbre as modelTimb;
+use \App\Models\Enchere as modelEnch;
+use \App\Models\Timbre;
 
 use \Core\Validation;
 use \Core\CheckSession;
@@ -19,14 +19,14 @@ class Enchere extends \Core\Controller
 
     public function indexAction()
     {
-        $encheres = modelEch::getAll();
+        $encheres = modelEnch::getAll();
         View::renderTemplate('Enchere/index.html', ['encheres' => $encheres]);
     }
 
     public function createAction() {
         CheckSession::sessionAuth();
 
-        $timbres = modelTimb::getAll();
+        $timbres = Timbre::getAll();
         View::renderTemplate('Enchere/creation.html', ['timbres' => $timbres]);
     }
 
@@ -39,9 +39,10 @@ class Enchere extends \Core\Controller
         $validation->name('quantiteMise')->value($quantiteMise)->pattern('int')->required()->max(2);
 
         if($validation->isSuccess()){
-            $enchereId = modelEch::insert($_POST);
-            $timbreId = $_POST['Timbre_id'];
-            modelTimb::updateEnchereDeTimbre($enchereId, $timbreId);
+            $_POST['Membre_id'] = $_SESSION['user_id'];
+            $enchereId = modelEnch::insert($_POST);
+
+            Timbre::updateEnchereDeTimbre($enchereId, $Timbre_id);
             header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
         }else{
             $errors = $validation->displayErrors();

@@ -12,7 +12,7 @@ use PDO;
 class Enchere extends \Core\Model
 {
 
-    protected static $fillable = ['dateDebut', 'dateFin', 'prixPlancher', 'quantiteMise'];
+    protected static $fillable = ['dateDebut', 'dateFin', 'prixPlancher', 'quantiteMise', 'Membre_id'];
     /**
      * Get all the users as an associative array
      *
