@@ -13,18 +13,10 @@ class Enchere extends \Core\Model
 {
 
     protected static $fillable = ['dateDebut', 'dateFin', 'prixPlancher', 'quantiteMise', 'Membre_id'];
-    /**
-     * Get all the users as an associative array
-     *
-     * @return array
-     */
-    public static function getAll()
-    {
-        $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Enchere');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
+    /**
+     * Affichage de tous les enchères du membre
+     */
     public static function getEncheres($id)
     {
         $pdo = static::getDB();
@@ -40,7 +32,7 @@ class Enchere extends \Core\Model
     }
 
     /**
-     * DO THE Comments
+     * Insertion dans la base de données
      */
     public static function insert($data){
         $pdo = static::getDB();
@@ -61,6 +53,9 @@ class Enchere extends \Core\Model
         return $pdo->lastInsertId();
     }
 
+    /**
+     * Efface l'enchère de la base de données
+     */
     public static function deleteTimbre($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Enchere

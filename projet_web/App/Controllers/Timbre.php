@@ -21,40 +21,18 @@ use \Core\CheckSession;
  */
 class Timbre extends \Core\Controller
 {
-
+    /**
+     * Affichage de timbre aux enchères
+     */
     public function indexAction()
     {
         $timbres = model::getAll();
         View::renderTemplate('Timbre/index.html', ['timbres' => $timbres]);
     }
 
-    public function catalogueAction()
-    {
-        $vars = [];
-        unset($_GET['catalogue']);
-        $valid = new Validation;
-        if (isset($_GET['trie'])) {
-            $valid->name('trie')->value($_GET['trie'])->pattern('alpha')->required()->max(4);
-            $trie = ($valid->isSuccess()) ? $_GET['trie'] : "ASC";
-            unset($_GET['trie']);
-        } else {
-            $trie = 'ASC';
-        }
-
-        if(isset($_GET['recherche'])) {
-            $timbres = model::recherche($_GET['recherche']);
-            $vars['recherche'] = $_GET['recherche'];
-        } else if(isset($_GET)) {
-            $vars = $_GET;
-            $timbres = model::filtrageTimbre($vars, $trie);
-        }
-        $pays = model::getFiltresPaysTimbre();
-        $couleurs = model::getFiltresCouleursTimbre();
-        $etats = model::getFiltresEtatTimbre();
-
-        View::renderTemplate('Timbre/catalogue.html', ['timbres' => $timbres, 'pays' => $pays, 'couleurs' => $couleurs, 'etats' => $etats, 'vars' => $vars]);
-    }
-
+    /**
+     * Affichage de détails sur la timbre
+     */
     public function showAction()
     {
         $id = $this->route_params['id'];
@@ -74,6 +52,9 @@ class Timbre extends \Core\Controller
         View::renderTemplate('Timbre/show.html', ['timbre' => $timbre, 'mise' => $mise]);
     }
 
+    /**
+     * Page création de timbre
+     */
     public function createAction() {
         CheckSession::sessionAuth();
 
@@ -81,6 +62,9 @@ class Timbre extends \Core\Controller
         View::renderTemplate('Timbre/creation.html', ['timbres' => $timbres]);
     }
 
+    /**
+     * Enregistrement de timbre dans le système
+     */
     public function storeAction() {
         CheckSession::sessionAuth();
 
@@ -110,6 +94,9 @@ class Timbre extends \Core\Controller
         }
     }
 
+    /**
+     * Page de modification des détails sur la timbre
+     */
     public function modifierAction()
     {
         CheckSession::sessionAuth();
@@ -123,6 +110,9 @@ class Timbre extends \Core\Controller
         View::renderTemplate('Timbre/edit.html', ['timbre' => $timbre]);
     }
 
+    /**
+     * Enregistrement des modification dans la base de données
+     */
     public function editAction()
     {
         CheckSession::sessionAuth();
@@ -134,6 +124,9 @@ class Timbre extends \Core\Controller
         header("Location: http://".$_SERVER['SERVER_NAME'].":8080/projet_web/public/timbre/show/$id");
     }
 
+    /**
+     * Effacer la timbre et l'enchère lié
+     */
     public function supprimerAction() {
         CheckSession::sessionAuth();
 
@@ -145,6 +138,9 @@ class Timbre extends \Core\Controller
         $timbres = model::delete($id);
     }
 
+    /**
+     * Generation du nom de l'image en enregistrement dans le système
+     */
     public static function sauvegarderImage() {
 
         $info = pathinfo($_FILES['imageFichier']['name']);
@@ -160,7 +156,9 @@ class Timbre extends \Core\Controller
     }
 
 
-
+    /**
+     * Faire une mise sur la timbre
+     */
     public function miserAction() {
         $_POST['Timbre_id'] = $this->route_params['id'];
         $_POST['dateMise'] = date('y-m-d h:i:s');

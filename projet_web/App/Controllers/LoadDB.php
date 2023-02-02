@@ -8,9 +8,8 @@ use \App\Models\Favoris;
 use Core\Validation;
 
 /**
- * Home controller
- *
- * PHP version 7.0
+ * Controller
+ * Execution des tâches dans la base de données avec JavaScript
  */
 class LoadDB extends \Core\Controller
 {
@@ -31,20 +30,10 @@ class LoadDB extends \Core\Controller
         echo('</pre>');
     }
 
-
-    // Filtres de Pays
-    public function FiltreParPaysAction()
-    {
-        $table = Timbre::getAll();
-
-        $json = json_decode(file_get_contents('php://input'));
-        $text = file_get_contents('php://input');
-        echo('Input: '.$text);
-        echo('<pre>');
-        print_r($table);
-        echo('</pre>');
-    }
-
+    /**
+     * Recuperation des données sur les timbres avec les filtres appliqués
+     * @return void
+     */
     public function FiltreAction()
     {
         $json = json_decode(file_get_contents('php://input'));
@@ -52,18 +41,10 @@ class LoadDB extends \Core\Controller
         echo(json_encode($encheres));
     }
 
-    public function rechercheAction()
-    {
-        $table = Timbre::getAll();
-
-        $json = json_decode(file_get_contents('php://input'));
-        $text = file_get_contents('php://input');
-        echo('Input: '.$text);
-        echo('<pre>');
-        print_r($table);
-        echo('</pre>');
-    }
-
+    /**
+     * Enregistrement en favoris de l'echère dans la base de données
+     * @return void
+     */
     public function mettreFavorisAction() {
         $text = file_get_contents('php://input');
         $data = [
@@ -74,6 +55,10 @@ class LoadDB extends \Core\Controller
         echo ($text);
     }
 
+    /**
+     * Recuperation des données sur les timbres par la recherche et triage
+     * @return void
+     */
     public function getTimbresAction() {
         unset($_GET['LoadDB/getTimbres']);
         $valid = new Validation;

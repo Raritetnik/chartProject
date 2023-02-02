@@ -13,18 +13,10 @@ class Favoris extends \Core\Model
 {
 
     protected static $fillable = [ 'Membre_id', 'Enchere_id'];
-    /**
-     * Get all the users as an associative array
-     *
-     * @return array
-     */
-    public static function getAll()
-    {
-        $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Favoris');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
+    /**
+     * Insertion dans la base de données
+     */
     public static function insert($data){
         $pdo = static::getDB();
 
@@ -43,6 +35,9 @@ class Favoris extends \Core\Model
         }
     }
 
+    /**
+     * Supprimer l'enchère favoris de la base de données
+     */
     public static function delete($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Favoris
@@ -55,6 +50,9 @@ class Favoris extends \Core\Model
         }
     }
 
+    /**
+     * Recupère tous les enchères favoris
+     */
     public static function getAllFavoris($id)
     {
         $pdo = static::getDB();

@@ -14,10 +14,9 @@ class Membre extends \Core\Model
 
     protected static $fillable = ['nom', 'prenom', 'phone', 'adresse', 'zipCode', 'username', 'password'];
     protected static $fillable2 = ['nom', 'prenom', 'phone', 'adresse', 'zipCode', 'username'];
+
     /**
-     * Get all the users as an associative array
-     *
-     * @return array
+     * Recupère tous les membres
      */
     public static function getAll()
     {
@@ -26,6 +25,9 @@ class Membre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recupère le membre spécifique selon ID
+     */
     public static function getMembre($id)
     {
         $pdo = static::getDB();
@@ -39,6 +41,9 @@ class Membre extends \Core\Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Verification de l'utilisateur, son mot de passe chiffré
+     */
     public static function checkMembre($data) {
         extract($data);
         $pdo = static::getDB();
@@ -64,6 +69,24 @@ class Membre extends \Core\Model
         }
     }
 
+    /**
+     * Verification si l'utilisateur existe déjà dans le système
+     * @param mixed $username - courriel
+     * @return string - Erreur
+     */
+    public static function checkMembreExist($username) {
+        $pdo = static::getDB();
+        $stmt = $pdo->prepare('SELECT * FROM Membre WHERE username = ?');
+        $stmt->execute($username);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $count = $stmt->rowCount();
+
+        return ($count >= 1) ? "<ul><li>Le nom d'utilisateur exist déjà dans le système</li></ul>" : "";
+    }
+
+    /**
+     * Insertion de nouveau utilisateur
+     */
     public static function insert($data){
         $pdo = static::getDB();
 
@@ -82,6 +105,9 @@ class Membre extends \Core\Model
         }
     }
 
+    /**
+     * Mettre à jour le mot de passe de l'utilisateur dans la base de données
+     */
     public static function updatePassword($data){
         $pdo = static::getDB();
         $options = [

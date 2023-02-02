@@ -3,7 +3,7 @@ window.onload = (e) => {
     const btnRecherche = document.querySelector('.fa-magnifying-glass');
     const recherche = document.querySelector('#recherche');
 
-
+    // Bouton de recherche sur la page accueil - ACTION
     btnRecherche.addEventListener('mousedown', (e) => {
 
         const urlParams = new URLSearchParams();
@@ -12,10 +12,4 @@ window.onload = (e) => {
         }
         window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
     });
-
-    const options = {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    };
-
 }

@@ -16,13 +16,40 @@ use \Core\CheckSession;
  */
 class Enchere extends \Core\Controller
 {
-
+    /**
+     * Affichage de catalogue des timbres aux enchères
+     * Avec la gestion des paramètres de filtres et triage
+     */
     public function indexAction()
     {
-        $encheres = modelEnch::getAll();
-        View::renderTemplate('Enchere/index.html', ['encheres' => $encheres]);
+        $vars = [];
+        unset($_GET['catalogue']);
+        $valid = new Validation;
+        if (isset($_GET['trie'])) {
+            $valid->name('trie')->value($_GET['trie'])->pattern('alpha')->required()->max(4);
+            $trie = ($valid->isSuccess()) ? $_GET['trie'] : "ASC";
+            unset($_GET['trie']);
+        } else {
+            $trie = 'ASC';
+        }
+
+        if(isset($_GET['recherche'])) {
+            $timbres = Timbre::recherche($_GET['recherche']);
+            $vars['recherche'] = $_GET['recherche'];
+        } else if(isset($_GET)) {
+            $vars = $_GET;
+            $timbres = Timbre::filtrageTimbre($vars, $trie);
+        }
+        $pays = Timbre::getFiltresPaysTimbre();
+        $couleurs = Timbre::getFiltresCouleursTimbre();
+        $etats = Timbre::getFiltresEtatTimbre();
+
+        View::renderTemplate('Timbre/catalogue.html', ['timbres' => $timbres, 'pays' => $pays, 'couleurs' => $couleurs, 'etats' => $etats, 'vars' => $vars]);
     }
 
+    /**
+     * Redirection sur la page de création de l'enchère
+     */
     public function createAction() {
         CheckSession::sessionAuth();
 
@@ -30,6 +57,9 @@ class Enchere extends \Core\Controller
         View::renderTemplate('Enchere/creation.html', ['timbres' => $timbres]);
     }
 
+    /**
+     * Sauvegarde de l'enchère dans la base de données
+     */
     public function storeAction() {
         CheckSession::sessionAuth();
 

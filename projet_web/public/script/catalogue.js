@@ -6,7 +6,7 @@ window.onload = (e) => {
     const filtreAnnee = document.querySelector('#annee');
     const recherche = document.querySelector('#filtre-recherche');
 
-
+    // Filtrer les résultat de catalogue - ACTION
     filtres.addEventListener('change', (e) => {
         console.log('Reaction filtre');
         let resultats = filtres.querySelectorAll('input:checked');
@@ -26,11 +26,7 @@ window.onload = (e) => {
         window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
     });
 
-    const options = {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    };
-
+    // Trier les résultat de catalogue - ACTION
     trier.addEventListener('mousedown', (e) => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);

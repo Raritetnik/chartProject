@@ -13,18 +13,11 @@ class Mise extends \Core\Model
 {
 
     protected static $fillable = ['prixMise', 'dateMise', 'Membre_id', 'Enchere_id', 'Timbre_id'];
-    /**
-     * Get all the users as an associative array
-     *
-     * @return array
-     */
-    public static function getAll()
-    {
-        $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Mise');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
+
+    /**
+     * Recuperer les mise liées à l'utilisateur
+     */
     public static function getMise($id)
     {
         $pdo = static::getDB();
@@ -40,6 +33,9 @@ class Mise extends \Core\Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Inserer une nouvelle mise
+     */
     public static function insert($data){
         $pdo = static::getDB();
 

@@ -14,7 +14,7 @@ class Home extends \Core\Controller
 {
 
     /**
-     * Show the index page
+     * Affichage de la page accueil
      *
      * @return void
      */

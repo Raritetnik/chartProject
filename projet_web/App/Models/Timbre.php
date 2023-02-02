@@ -13,10 +13,9 @@ class Timbre extends \Core\Model
 {
 
     protected static $fillable = ['idTimbre','titre', 'dateCreation', 'couleur', 'pays', 'etat', 'tirage', 'dimensions', 'certifier', 'Membre_id'];
+
     /**
-     * Get all the users as an associative array
-     *
-     * @return array
+     * Recuperer tous les timbres
      */
     public static function getAll()
     {
@@ -25,6 +24,9 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recuperer tous les timbres aux enchères
+     */
     public static function getAllwithEnchere()
     {
         $pdo = static::getDB();
@@ -34,6 +36,9 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recuperer tous les mises liée à la timbre
+     */
     public static function getAllMises($id)
     {
         $pdo = static::getDB();
@@ -51,6 +56,9 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recuperer tous les timbres avec les image principales
+     */
     public static function getTimbres($id)
     {
         $pdo = static::getDB();
@@ -66,6 +74,9 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recuperer le timbre spécifique qui est aux enchères
+     */
     public static function getTimbre($id)
     {
         $pdo = static::getDB();
@@ -82,6 +93,9 @@ class Timbre extends \Core\Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Insertion d'une nouvelle timbre
+     */
     public static function insert($data){
         $pdo = static::getDB();
 
@@ -101,6 +115,9 @@ class Timbre extends \Core\Model
         }
     }
 
+    /**
+     * Page: Mettre à jour le timbre dans la base de données
+     */
     public static function updateEnchereDeTimbre($idEnchere, $idTimbre) {
         $pdo = static::getDB();
         $stmt = $pdo->prepare("UPDATE Timbre SET Timbre.Enchere_id = :idEnchere WHERE Timbre.idTimbre = :idTimbre");
@@ -114,6 +131,10 @@ class Timbre extends \Core\Model
         }
     }
 
+
+    /**
+     * Savegarder des modifications sur le timbre
+     */
     public static function save($data) {
         $pdo = static::getDB();
         $stmt = $pdo->prepare("UPDATE Timbre SET `titre` = :titre, `couleur` = :couleur, `pays` = :pays, `dimensions` = :dimensions
@@ -129,6 +150,9 @@ class Timbre extends \Core\Model
         }
     }
 
+    /**
+     * Supprime le timbre de la base de données
+     */
     public static function delete($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Timbre
@@ -165,6 +189,12 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     *  Filtrage de l'affichage dans le catalogue des timbres
+     *
+     * @param mixed $filtres - pays, couleur, etat
+     * @param mixed $trie - ASC / DESC
+     */
     public static function filtrageTimbre($filtres, $trie)
     {
         $pdo = static::getDB();
@@ -193,6 +223,9 @@ class Timbre extends \Core\Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Recuperation des données timbres selon la recherche dans la base de données
+     */
     public static function recherche($recherche)
     {
         $pdo = static::getDB();

@@ -6,10 +6,11 @@ window.onload = (e) => {
         maximumFractionDigits: 2
       };
 
-    let favoriser = true;
 
+    // Mettre en favrois l'enchere - ACTION
     filtre.addEventListener('mousedown' , (e) => {
         let id = filtre.dataset.idenchere;
+        // Action sur la base de données
         fetch('http://localhost:8080/projet_web/public/LoadDB/mettreFavoris', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

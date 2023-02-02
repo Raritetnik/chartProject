@@ -13,18 +13,10 @@ class Image extends \Core\Model
 {
 
     protected static $fillable = ['url', 'estPrincip', 'Timbre_id'];
-    /**
-     * Get all the users as an associative array
-     *
-     * @return array
-     */
-    public static function getAll()
-    {
-        $pdo = static::getDB();
-        $stmt = $pdo->query('SELECT * FROM Image');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
+    /**
+     * Insertion de lien dans la base de données
+     */
     public static function insert($data){
         $pdo = static::getDB();
 
@@ -43,6 +35,9 @@ class Image extends \Core\Model
         }
     }
 
+    /**
+     * Supprimer image lié à la timbre
+     */
     public static function deleteTimbre($id){
         $pdo = static::getDB();
         $stmt = $pdo->prepare("DELETE FROM Image

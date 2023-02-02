@@ -20,9 +20,7 @@ class Membre extends \Core\Controller
 
     static $directory;
     /**
-     * Show the index page
-     *
-     * @return void
+     * Affichage de la page COMPTE de l'utilisateur
      */
     public function indexAction()
     {
@@ -35,17 +33,26 @@ class Membre extends \Core\Controller
         View::renderTemplate('Membre/index.html', ['membre' => $membre, 'timbres' => $timbres, 'mises' => $mises, 'favoris' => $favoris]);
     }
 
+    /**
+     * Redirection sur la page de création de compte
+     */
     public function signUpAction()
     {
         $membres = model::getAll();
         View::renderTemplate('Membre/creation.html');
     }
 
+    /**
+     * Redirection sur la page de connexion
+     */
     public function loginAction()
     {
         View::renderTemplate('Membre/connexion.html');
     }
 
+    /**
+     * Vérifiaction de données saisie et verification de mot de passe
+     */
     public function authAction() {
         $validation = new \Core\Validation;
         extract($_POST);
@@ -67,6 +74,9 @@ class Membre extends \Core\Controller
         }
     }
 
+    /**
+     * Verification de données saisie et enregistrement dans la base de données
+     */
     public function storeAction() {
         $validation = new Validation;
         extract($_POST);
@@ -77,21 +87,37 @@ class Membre extends \Core\Controller
         $validation->name('username')->value($username)->pattern('email')->required()->max(50);
         $validation->name('password')->value($password)->max(20)->min(3);
 
-        if($validation->isSuccess()){
+        $checkMembre = model::checkMembreExist($username);
+        if($validation->isSuccess() && $checkMembre == ''){
             $options = [
                 'cost' => 10,
             ];
             $_POST['password']= password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
             $userInsert = model::insert($_POST);
             header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/membre/login');
-        }else{
+        } else if($checkMembre != '') {
+            $errors = $checkMembre;
+            View::renderTemplate('Membre/creation.html', ['errors' => $errors]);
+        }
+        else{
             $errors = $validation->displayErrors();
             View::renderTemplate('Membre/creation.html', ['errors' => $errors]);
         }
     }
 
+    /**
+     * Deconnexion de l'utilisateur
+     */
     public function logoutAction() {
         session_destroy();
         header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
+    }
+
+    /**
+     * Changer le mot de passe utilisateur
+     */
+    public function motdepasseAction() {
+        $data['password'] = file_get_contents('php://input');
+        model::updatePassword($data);
     }
 }
