@@ -8,19 +8,21 @@ window.onload = (e) => {
 
 
     filtres.addEventListener('change', (e) => {
+        console.log('Reaction filtre');
         let resultats = filtres.querySelectorAll('input:checked');
         let vars = '';
 
         const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-
-        if(urlParams == 0) {
+        const urlParams = new URLSearchParams();
+        if(recherche.value != '') {
             urlParams.set('recherche', recherche.value);
-        } else {
-            resultats.forEach(a => {
-                urlParams.set(a.name, a.id);
-            });
         }
+        resultats.forEach(a => {
+            urlParams.set(a.name, a.id);
+            if(urlParams.get(a.name) == ""){
+                urlParams.delete(a.name);
+            }
+        });
         window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
     });
 
@@ -34,11 +36,13 @@ window.onload = (e) => {
         const urlParams = new URLSearchParams(queryString);
 
         if(urlParams == 0 || !urlParams.has('trie')) {
-            urlParams.set('trie', 'ASC');
+            urlParams.set('trie', 'DESC');
         } else if(urlParams.get('trie') == 'ASC') {
             urlParams.set('trie', 'DESC');
         } else if(urlParams.get('trie') == 'DESC') {
             urlParams.set('trie', 'ASC');
+        } else {
+            urlParams.delete('trie');
         }
         window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
 

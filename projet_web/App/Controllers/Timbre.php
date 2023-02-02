@@ -44,7 +44,7 @@ class Timbre extends \Core\Controller
         if(isset($_GET['recherche'])) {
             $timbres = model::recherche($_GET['recherche']);
             $vars['recherche'] = $_GET['recherche'];
-        } else if(isset($_GET) ) {
+        } else if(isset($_GET)) {
             $vars = $_GET;
             $timbres = model::filtrageTimbre($vars, $trie);
         }
