@@ -23,7 +23,7 @@ window.onload = (e) => {
                 urlParams.delete(a.name);
             }
         });
-        window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
+        window.location.assign('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/catalogue?'+urlParams.toString());
     });
 
     // Trier les résultat de catalogue - ACTION
@@ -40,9 +40,9 @@ window.onload = (e) => {
         } else {
             urlParams.delete('trie');
         }
-        window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
+        window.location.assign('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/catalogue?'+urlParams.toString());
 
-        fetch('http://localhost:8080/projet_web/public/LoadDB/getTimbres?'+urlParams.toString())
+        fetch('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/LoadDB/getTimbres?'+urlParams.toString())
         .then((data) => data.json())
         .then(data => {
             console.log(data);

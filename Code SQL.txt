@@ -210,6 +210,16 @@ INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `l
 VALUES ('2022-01-01','2023-01-01', 2520.00, 6, 0, 1);
 INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
 VALUES ('2022-03-21','2023-02-02', 12700.00, 0, 1, 1);
+INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
+VALUES ('2022-05-07','2023-07-07', 25120.00, 7, 0, 1);
+INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
+VALUES ('2022-11-27','2023-12-31', 27710.00, 3, 0, 2);
+INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
+VALUES ('2021-05-07','2023-08-12', 8120.00, 1, 1, 3);
+INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
+VALUES ('2022-01-01','2023-01-01', 1520.00, 6, 0, 1);
+INSERT INTO `Enchere`(`dateDebut`, `dateFin`, `prixPlancher`, `quantiteMise`, `lordLike`, `Membre_id`) 
+VALUES ('2022-03-21','2023-02-02', 2700.00, 0, 1, 2);
 
 
 INSERT INTO `Timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
@@ -227,6 +237,13 @@ VALUES ('63d038df64e89', 'MAROC 1.50FR blue light timbre 1948 #21112 ','2022-06-
 INSERT INTO `Timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
 VALUES ('63d038e31d59a', 'Tanzania TZA, timbre eleph 2010 #24122','2022-10-24','multi-couleur','Monde','nouveau','1','200cm x 150cm',1,5,3);
 
+INSERT INTO `Timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+VALUES ('63d038fs75da0', 'New Zealand  #221241','2022-03-26','noir et blanc','Nouvelle Zilande','ancienne','1','200cm x 150cm',1,3,3);
+INSERT INTO `Timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+VALUES ('63d0383r64e89', 'MAROC 2.50FR blue light timbre 1948 #4231231 ','2022-06-06','vert','Maroc','usée','1','200cm x 150cm',1,2,1);
+INSERT INTO `Timbre`( `idTimbre`, `titre`, `dateCreation`, `couleur`, `pays`, `etat`, `tirage`, `dimensions`, `certifier`, `Enchere_id`, `Membre_id`) 
+VALUES ('63d018h31d59a', 'Tanzania TZA 1, timbre eleph 2010 #5345351','2022-10-24','multi-couleur','Tanzania','beau','1','200cm x 150cm',0,3,1);
+
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_1.webp', 1,'63d0388b5f9a7');
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_2.webp', 1,'63d038cc41a04');
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_3.webp', 1,'63d038d1e8578');
@@ -234,6 +251,10 @@ INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.w
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_5.webp', 1,'63d038da75da0');
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_6.webp', 1,'63d038df64e89');
 INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_7.webp', 1,'63d038e31d59a');
+
+INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_5.webp', 1,'63d018h31d59a');
+INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_6.webp', 1,'63d0383r64e89');
+INSERT INTO `Image`(`url`, `estPrincip`, `Timbre_id`) VALUES ('http://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/Assets/img_Timbres/tim_7.webp', 1,'63d038fs75da0');
 
 
 

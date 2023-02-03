@@ -20,7 +20,6 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-        $_SESSION['user_id'] = 1;
         View::renderTemplate('Home/index.html');
     }
 }

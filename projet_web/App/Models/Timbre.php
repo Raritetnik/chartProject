@@ -103,7 +103,7 @@ class Timbre extends \Core\Model
         $data_map = array_intersect_key($data, $data_keys);
         $nomChamp = implode(", ",array_keys($data_map));
         $valeurChamp = ":".implode(", :", array_keys($data_map));
-        $stmt = $pdo->prepare("INSERT INTO timbre ($nomChamp) VALUES ($valeurChamp)");
+        $stmt = $pdo->prepare("INSERT INTO Timbre ($nomChamp) VALUES ($valeurChamp)");
 
         foreach($data_map as $key=>$value){
             $stmt->bindValue(":$key", $value);

@@ -64,7 +64,7 @@ class Membre extends \Core\Controller
 
             $checkUser = model::checkMembre($_POST);
             if($checkUser){
-                header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
+                header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
             } else {
                 View::renderTemplate('Membre/connexion.html', ['errors' => $checkUser]);
             }
@@ -94,7 +94,7 @@ class Membre extends \Core\Controller
             ];
             $_POST['password']= password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
             $userInsert = model::insert($_POST);
-            header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/membre/login');
+            header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/membre/login');
         } else if($checkMembre != '') {
             $errors = $checkMembre;
             View::renderTemplate('Membre/creation.html', ['errors' => $errors]);
@@ -110,7 +110,7 @@ class Membre extends \Core\Controller
      */
     public function logoutAction() {
         session_destroy();
-        header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
+        header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
     }
 
     /**

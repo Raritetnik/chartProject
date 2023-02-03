@@ -35,6 +35,7 @@ class Timbre extends \Core\Controller
      */
     public function showAction()
     {
+
         $id = $this->route_params['id'];
         $timbre = model::getTimbre($id);
         $mise = modelMise::getMise($id);
@@ -46,8 +47,8 @@ class Timbre extends \Core\Controller
             ];
         }
         setlocale(LC_TIME, 'fr_CA');
-        $timbre['dateFinName'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
-        $timbre['dateDebutName'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
+        //$timbre['dateFinName'] = date('d F Y h:i:s' , strtotime($timbre['dateFin']));
+        //$timbre['dateDebutName'] = date('d F Y h:i:s' , strtotime($timbre['dateDebut']));
 
         View::renderTemplate('Timbre/show.html', ['timbre' => $timbre, 'mise' => $mise]);
     }
@@ -82,11 +83,12 @@ class Timbre extends \Core\Controller
 
 
             $url = Timbre::sauvegarderImage();
-            $data['url'] = "http://".$_SERVER['SERVER_NAME'].":8080/projet_web/public/Assets/img_Timbres/".$url;
+            $data['url'] = "https://".$_SERVER['SERVER_NAME']."/projet_web/public/Assets/img_Timbres/".$url;
+            echo($data['url']);
             $data['Timbre_id'] = $idTimbre;
             $data['estPrincip'] = 1;
             modelImage::insert($data);
-            header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
+            header('Location: https://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
         } else {
             $errors = $validation->displayErrors();
             print_r($errors);
@@ -121,7 +123,7 @@ class Timbre extends \Core\Controller
         $_POST['idTimbre'] = $id;
         print_r($_POST);
         model::save($_POST);
-        header("Location: http://".$_SERVER['SERVER_NAME'].":8080/projet_web/public/timbre/show/$id");
+        header("Location: https://".$_SERVER['SERVER_NAME']."/projet_web/public/timbre/show/$id");
     }
 
     /**
@@ -136,6 +138,7 @@ class Timbre extends \Core\Controller
             modelEnchere::deleteTimbre($id);
         }
         $timbres = model::delete($id);
+        header("Location: https://".$_SERVER['SERVER_NAME']."/projet_web/public/membre");
     }
 
     /**
@@ -152,7 +155,7 @@ class Timbre extends \Core\Controller
         move_uploaded_file( $_FILES['imageFichier']['tmp_name'], $filename);
 
         // Nom fichier
-        return (explode('\\', $filename)[count(explode('\\', $filename))-1]);
+        return (explode('/', $filename)[count(explode('/', $filename))-1]);
     }
 
 
@@ -164,6 +167,6 @@ class Timbre extends \Core\Controller
         $_POST['dateMise'] = date('y-m-d h:i:s');
         $_POST['Membre_id'] = $_SESSION['user_id'];
         modelMise::insert($_POST);
-        header("Location: http://".$_SERVER['SERVER_NAME'].":8080/projet_web/public/timbre/show/".$_POST['Timbre_id']);
+        header("Location: https://".$_SERVER['SERVER_NAME']."/projet_web/public/timbre/show/".$_POST['Timbre_id']);
     }
 }

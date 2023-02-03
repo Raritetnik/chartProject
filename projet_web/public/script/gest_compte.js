@@ -37,7 +37,7 @@ window.onload = (e) => {
         const motDePasse = document.querySelector('[name="password"]');
 
         if(motDePasse.value != "" || motDePasse.value != null) {
-            fetch('http://localhost:8080/projet_web/public/membre/motdepasse', {
+            fetch('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/membre/motdepasse', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: motDePasse.value

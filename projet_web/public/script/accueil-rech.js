@@ -10,6 +10,6 @@ window.onload = (e) => {
         if(recherche.value != '') {
             urlParams.set('recherche', recherche.value);
         }
-        window.location.assign('http://localhost:8080/projet_web/public/catalogue?'+urlParams.toString());
+        window.location.assign('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/catalogue?'+urlParams.toString());
     });
 }

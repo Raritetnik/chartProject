@@ -11,7 +11,7 @@ window.onload = (e) => {
     filtre.addEventListener('mousedown' , (e) => {
         let id = filtre.dataset.idenchere;
         // Action sur la base de données
-        fetch('http://localhost:8080/projet_web/public/LoadDB/mettreFavoris', {
+        fetch('https://e2196106.webdev.cmaisonneuve.qc.ca/projet_web/public/LoadDB/mettreFavoris', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: id
@@ -21,6 +21,17 @@ window.onload = (e) => {
             console.log(data);
         });
     });
+
+    const imgZoom = document.querySelector('#img_princ');
+    imgZoom.addEventListener('mousedown', (e) => {
+        if(imgZoom.classList.contains('showImage')) {
+            imgZoom.classList.remove('showImage');
+        } else {
+            imgZoom.classList.add('showImage');
+        }
+    });
+
+
 }
 
 

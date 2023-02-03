@@ -5,7 +5,7 @@ window.onload = (e) => {
 
     btn.addEventListener('mousedown', (e) => {
         let a = input.value;
-        fetch('https://localhost/php-mvc/public/getDBTimbre', {
+        fetch('https://e2196106.webdev.cmaisonneuve.qc.ca/php-mvc/public/getDBTimbre', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: input.value

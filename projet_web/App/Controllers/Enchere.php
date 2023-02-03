@@ -73,7 +73,7 @@ class Enchere extends \Core\Controller
             $enchereId = modelEnch::insert($_POST);
 
             Timbre::updateEnchereDeTimbre($enchereId, $Timbre_id);
-            header('Location: http://'.$_SERVER['SERVER_NAME'].':8080/projet_web/public/');
+            header('Location: http://'.$_SERVER['SERVER_NAME'].'/projet_web/public/');
         }else{
             $errors = $validation->displayErrors();
             print_r($errors);
